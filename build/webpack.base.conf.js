@@ -1,3 +1,10 @@
+/*
+ * @作者: Edwin Yeung
+ * @Date: 2020-03-15 12:00:11
+ * @修改人: Edwin Yeung
+ * @LastEditTime: 2020-03-15 13:55:12
+ * @描述: 
+ */
 'use strict'
 const path = require('path')
 const utils = require('./utils')
@@ -27,6 +34,10 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'components':resolve('src/components'),
+      'views':resolve('src/views'),
+      'assets':resolve('src/assets'),
+      'common':resolve('src/common')
     }
   },
   module: {

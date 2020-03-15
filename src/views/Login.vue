@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:23:30
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 11:45:08
+ * @LastEditTime: 2020-03-15 14:17:34
  * @描述: https://segmentfault.com/a/1190000015201803
  *        https://github.com/doterlin/vue-example-login
  *        https://blog.csdn.net/weixin_41105030/article/details/89333208  
@@ -14,14 +14,14 @@
       <div class="login-form">
         <div class="input-item">
           <label>账 号</label>
-          <input type="text" class="form-control9" v-model="mobile" required placeholder="请输入手机号码" />
+          <input type="text" class="" v-model="mobile" required placeholder="请输入手机号码" maxlength="11" />
         </div>
         <div class="input-item">
           <label for>密 码</label>
-          <input type="text" class="form-control9" v-model="password" required placeholder="请输入密码" />
+          <input type="password" id='password' v-model="password" required placeholder="请输入密码" />
         </div>
         <div class="login-register">
-          <span>注册</span>
+          <span @click="register">注册</span>
           <button class="login" @click="logincheck">登录</button>
           <span>忘记密码</span>
         </div>
@@ -41,25 +41,24 @@ export default {
     };
   },
   methods: {
-    login() {
-      if (!this.mobile) {
-        // this.$message.error('请输入用户名')
-        console.log("请输入账号");
-        return;
-      }
-      if (!this.password) {
-        // this.$message.error('请输入用户名')
-        console.log("请输入密码");
-        return;
-      }
+    register(){
+      console.log('register click');
+      this.$router.push('/adduser')
     },
-
-    //密码校验
+        //密码校验
     logincheck() {
       let mobile = this.mobile;
       let password = this.password;
       let logdata = {};
 
+      if (!this.mobile) {
+        console.log("请输入账号");
+        return;
+      }
+      if (!this.password) {
+        console.log("请输入密码");
+        return;
+      }
       this.$http
         .post(
           "/api/user/logincheck",
@@ -134,7 +133,7 @@ h4.title {
   flex: 1;
   align-items: baseline;
 }
-input[type="text"] {
+input[type="text"],input[type="password"] {
   /* display: block; */
   /* border-radius:5px; */
   height: 25px;

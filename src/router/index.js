@@ -2,19 +2,20 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-14 10:34:49
+ * @LastEditTime: 2020-03-15 14:41:49
  * @描述: 
  */
 
  import Vue from "vue";
  import VueRouter from "vue-router"
- import store from "../store/index.js"
+ import store from "@/store/index.js"
 
  Vue.use(VueRouter)
 
  //懒加载
-const AddUser = () => import('../components/AddUser')
-const Login = () => import('../components/Login')
+const Home = () => import('views/Home')
+const AddUser = () => import('views/AddUser')
+const Login = () => import('views/Login')
 
 
 
@@ -25,7 +26,7 @@ const Login = () => import('../components/Login')
     },
     {
         path:'/home',
-        component:AddUser,
+        component:Home,
         meta:{
             requireAuth:true     // 添加该字段，表示进入这个路由是需要登录的
         }
@@ -33,6 +34,10 @@ const Login = () => import('../components/Login')
     {
         path:'/login',
         component:Login
+    },
+    {
+        path:'/adduser',
+        component:AddUser
     }
 ]
 
