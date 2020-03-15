@@ -2,18 +2,103 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 14:38:09
- * @描述: 
+ * @LastEditTime: 2020-03-16 02:26:46
+ * @描述: https://www.cnblogs.com/xiaomili/p/6759401.html
  -->
 <template>
-    <div class="home">
-        <h3>这是Home主页</h3>
+  <div class="hello">
+    <mt-header title="标题过长会隐藏后面的内容啊哈哈哈哈">
+      <router-link to="/login" slot="left">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+      <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <div class="page-swipe">
+      <mt-swipe :auto="3000">
+        <mt-swipe-item :class="{slide1:true}">1</mt-swipe-item>
+        <mt-swipe-item :class="{slide2:true}">2</mt-swipe-item>
+        <mt-swipe-item :class="{slide3:true}">3</mt-swipe-item>
+      </mt-swipe>
     </div>
+
+    <mt-button class="icon-btn" type="primary" size="large">
+      <img src="~assets/img/home.svg" height="20" width="20" slot="icon" />
+      带自定义图标
+    </mt-button>
+
+    <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
+    <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"></mt-field>
+    <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+    <mt-field label="手机号" placeholder="请输入手机号" type="tel"  v-model="phone"></mt-field>
+
+    <mt-tabbar v-model="selected">
+      <mt-tab-item id="外卖">
+        <img slot="icon" src="~assets/img/home.svg" />
+        外卖
+      </mt-tab-item>
+      <mt-tab-item id="订单">
+        <img slot="icon" src="~assets/img/category.svg" />
+        订单
+      </mt-tab-item>
+      <mt-tab-item id="发现">
+        <img slot="icon" src="~assets/img/shopcart.svg" />
+        发现
+      </mt-tab-item>
+      <mt-tab-item id="我的">
+        <img slot="icon" src="~assets/img/profile.svg" />
+        我的
+      </mt-tab-item>
+    </mt-tabbar>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "hello",
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+      phone: "",
+      selected: 2
+    };
+  }
+};
 </script>
 
-<style>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.page-swipe .mint-swipe {
+  height: 200px;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.page-swipe .mint-swipe-item {
+  line-height: 200px;
+}
+.page-swipe .slide1 {
+  background-color: #0089dc;
+  color: #fff;
+}
+.page-swipe .slide2 {
+  background-color: #ffd705;
+  color: #000;
+}
+.page-swipe .slide3 {
+  background-color: #ff2d4b;
+  color: #fff;
+}
+.page-swipe-desc {
+  text-align: center;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.icon-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 </style>

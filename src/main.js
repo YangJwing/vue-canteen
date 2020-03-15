@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-12 23:10:47
+ * @LastEditTime: 2020-03-16 00:52:33
  * @描述: 
  */
 // The Vue build version to load with the `import` command
@@ -14,7 +14,11 @@ import router from './router/index.js'
 import store from './store/index.js'
 import VueResource from 'vue-resource'
 
+import Mint from 'mint-ui'
+import 'mint-ui/lib/style.css'
+
 Vue.use(VueResource)
+Vue.use(Mint)
 
 Vue.config.productionTip = false
 

@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:00:11
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 13:55:12
+ * @LastEditTime: 2020-03-16 01:11:51
  * @描述: 
  */
 'use strict'
@@ -34,6 +34,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      //荣加入 on 2020.3.15
       'components':resolve('src/components'),
       'views':resolve('src/views'),
       'assets':resolve('src/assets'),

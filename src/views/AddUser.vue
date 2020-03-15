@@ -60,25 +60,30 @@ export default {
       this.$http
         //这里的 addUser 是路由，传送到 userApi.js 接口，以下的 searchUser 和 editUser 类似
         .post("/api/user/addUser", userdata, {})
+       
         //注册用户成功
         .then(response => {
-          this.user = {};
-
+          console.log('response :', response);  //不是查询，返回的数据没有用户信息
           //state的islogin设为true
           this.$store.commit("SET_LOGIN", true);
 
           //设置TOKEN 和 localstorage
-          this.$store.commit("SET_TOKEN", response.body[0]);
+          this.$store.commit("SET_TOKEN", userdata);
           console.log("this.state.token:", this.$store.state.token);
 
           //获得用户名
-          this.$store.commit("GET_USER", response.body[0].name);
+          this.$store.commit("GET_USER", userdata.name);
           // console.log('user :', this.$store.state.user);
 
-          logdata.name = response.body[0].name;
-          logdata.mobile = response.body[0].mobile;
-          logdata.state = "成功";
 
+          userdata.state = "首次注册登录";
+
+          //记录登录日志
+          this.$http.post("/api/user/loginlog",userdata)
+          .then(response=>{
+          })
+
+          this.user = {};
           //跳转到主页
           this.$router.push("/home");
         });

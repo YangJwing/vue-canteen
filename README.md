@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 13:38:59
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 14:51:04
+ * @LastEditTime: 2020-03-16 00:03:05
  * @描述: 
  -->
 ## 第一次用 Git 代码 托管
@@ -110,5 +110,48 @@ var sqlMap={
 - store (vuex)
 - network (网络相关)
 
+###  四.引入Mint UI 
+> http://mint-ui.github.io/#!/zh-cn
+1. 安装: npm i mint-ui -S
+2. 引入 Mint UI:
+  - 在 main.js 中写入以下内容:
 
+完整引入:
+```js
+import Vue from 'vue'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+import App from './App.vue'
+
+Vue.use(MintUI)
+
+new Vue({
+  el: '#app',
+  components: { App }
+})
+```
+如果你只希望引入部分组件，比如 Button 和 Cell，那么需要在 main.js 中写入以下内容：
+```js
+import Vue from 'vue'
+import { Button, Cell } from 'mint-ui'
+import App from './App.vue'
+
+Vue.component(Button.name, Button)
+Vue.component(Cell.name, Cell)
+/* 或写为
+ * Vue.use(Button)
+ * Vue.use(Cell)
+ */
+
+new Vue({
+  el: '#app',
+  components: { App }
+})
+```
+**关于事件绑定**
+
+在 Vue 2.0 中，为自定义组件绑定原生事件必须使用 .native 修饰符：
+```js
+<my-component @click.native="handleClick"> Click Me </my-component>
+```
 
