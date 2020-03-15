@@ -2,18 +2,18 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 13:38:59
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 12:07:00
+ * @LastEditTime: 2020-03-15 14:51:04
  * @描述: 
  -->
 ## 第一次用 Git 代码 托管
-## vue-mysql
+### vue-mysql
 
 - V0.1
 
 
 
 - V0.5
-## 一.前后端的逻辑  
+### 一.前后端的逻辑  
   - 前端 Login.vue 调用方法 logincheck()
 
 ```js
@@ -82,7 +82,7 @@ var sqlMap={
     },
 }
 ```  
-## 二.知识点
+### 二.知识点
  ##### 1. < roter-link > 的点击要在 @click后加native,即 @click.native
  
  ##### 2. 客户端存储(LocalStorage 和 sessionStorage)
@@ -92,7 +92,23 @@ var sqlMap={
  - window.localStorage.removeItem('token')
 
 
-#### 整合学到的知识到一个系统里
+### 三.划分目录结构
+
+- assets (静态资源文件)
+  - img
+  - css
+- common (公共的JS文件)
+  - const.js、utils.js、 mixin.js
+
+- components (公共的组件)
+  - common (完全可以复用)
+  - content (与业务相关公共组件)
+- views (视图组件)
+  - home
+  - login
+- router (路由)
+- store (vuex)
+- network (网络相关)
 
 
 

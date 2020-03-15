@@ -60,7 +60,7 @@ export default {
       this.$http
         //这里的 addUser 是路由，传送到 userApi.js 接口，以下的 searchUser 和 editUser 类似
         .post("/api/user/addUser", userdata, {})
-        //注册成功
+        //注册用户成功
         .then(response => {
           this.user = {};
 
