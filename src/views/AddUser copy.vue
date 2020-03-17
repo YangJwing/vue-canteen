@@ -28,7 +28,7 @@
       </div>
 
       <div class="btn">
-        <button v-on:click.prevent="addUser">添加用户</button>
+        <button v-on:click.prevent="register">添加用户</button>
         <button v-on:click.prevent="searchUser">查看用户</button>
         <button v-on:click.prevent="editUser">编辑用户</button>
         <button v-on:click.prevent="deleteUser">删除用户</button>
@@ -81,7 +81,7 @@ export default {
     };
   },
   methods: {
-    addUser() {
+    register() {
       let userdata = {
         name: this.user.name,
         sex: this.user.sex,
@@ -91,8 +91,8 @@ export default {
 
       // console.log(name + ":" + sex);
       this.$http
-        //这里的 addUser 是路由，传送到 userApi.js 接口，以下的 searchUser 和 editUser 类似
-        .post("/api/user/addUser", userdata, {})
+        //这里的 register 是路由，传送到 userApi.js 接口，以下的 searchUser 和 editUser 类似
+        .post("/api/user/register", userdata, {})
         .then(response => {
           console.log("成功提示：", response);
           // this.message = this.name + ":" + this.sex;

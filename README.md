@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 13:38:59
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-16 00:03:05
+ * @LastEditTime: 2020-03-16 21:20:13
  * @描述: 
  -->
 ## 第一次用 Git 代码 托管
@@ -155,3 +155,18 @@ new Vue({
 <my-component @click.native="handleClick"> Click Me </my-component>
 ```
 
+**mint-ui修改局部样式的方法**
+> 参考https://yq.aliyun.com/articles/693040 
+可以用 ==>>>== 或 ==/deep/== 修饰符,前后要加空格
+```js
+ <mt-field class="red-star" label="手机" placeholder="请输入手机号" type="tel" v-model="user.mobile"></mt-field>
+ <mt-field class="red-star" label="密码" placeholder="请输入密码" type="password" v-model="user.password"></mt-field>
+
+.red-star >>> .mint-cell-title::before {
+  content: "*";
+  color: red;
+}
+```
+```js
+var regex =/^[\u4E00-\u9FA5]+$/;//判断是否为纯汉字
+```

@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-16 00:52:33
+ * @LastEditTime: 2020-03-16 23:38:57
  * @描述: 
  */
 // The Vue build version to load with the `import` command
@@ -16,6 +16,7 @@ import VueResource from 'vue-resource'
 
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
+// import './assets/css/my-mint.scss'   //全局修改mint-UI样式
 
 Vue.use(VueResource)
 Vue.use(Mint)

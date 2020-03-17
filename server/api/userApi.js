@@ -22,8 +22,8 @@ var jsonWrite = function (res, ret) {
 }
 
 // 增加用户接口
-router.post('/addUser', (req, res) => {
-  var sql = $sql.user.add;
+router.post('/register', (req, res) => {
+  var sql = $sql.login.register;
   // post、put、delete通过req.body , get通过req.query 获取参数
   var params = req.body;
   console.log("params:", params);
@@ -33,7 +33,7 @@ router.post('/addUser', (req, res) => {
       console.log("荣提示：" + err);
     }
     if (result) {
-      console.log(params.name+" 用户增加成功!")
+      console.log(params.name+" 用户注册成功!")
       jsonWrite(res, result);
     }
   })

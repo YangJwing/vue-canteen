@@ -2,12 +2,12 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-16 02:26:46
+ * @LastEditTime: 2020-03-16 17:42:01
  * @描述: https://www.cnblogs.com/xiaomili/p/6759401.html
  -->
 <template>
   <div class="hello">
-    <mt-header title="标题过长会隐藏后面的内容啊哈哈哈哈">
+    <mt-header fixed title="标题过长会隐藏后面的内容啊哈哈哈哈">
       <router-link to="/login" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
@@ -25,13 +25,12 @@
       <img src="~assets/img/home.svg" height="20" width="20" slot="icon" />
       带自定义图标
     </mt-button>
+    
+    <ul>
+      <li v-for="item in 300">{{item}}</li>
+    </ul>
 
-    <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-    <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"></mt-field>
-    <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
-    <mt-field label="手机号" placeholder="请输入手机号" type="tel"  v-model="phone"></mt-field>
-
-    <mt-tabbar v-model="selected">
+    <mt-tabbar fixed v-model="selected">
       <mt-tab-item id="外卖">
         <img slot="icon" src="~assets/img/home.svg" />
         外卖
