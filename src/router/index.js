@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-16 23:00:02
+ * @LastEditTime: 2020-03-17 23:42:20
  * @描述: 
  */
 
@@ -17,13 +17,15 @@ const Home = () => import('views/Home')
 const Register = () => import('views/Register')
 const Login = () => import('views/Login')
 const TestMint = () => import('views/TestMint')
+const TestVant = () => import('views/TestVant')
+
 
 
 
  const routes=[
      {
         path:'',
-        redirect:"/register"
+        redirect:"/testvant"
     },
     {
         path:'/home',
@@ -43,6 +45,10 @@ const TestMint = () => import('views/TestMint')
     {
         path:"/testmint",
         component:TestMint
+    },
+    {
+        path:"/testvant",
+        component:TestVant
     }
 ]
 

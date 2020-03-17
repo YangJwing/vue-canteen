@@ -45,7 +45,7 @@ router.post('/logincheck',(req,res)=>{
   var params=req.body
   console.log('sql :', sql);
   console.log('params :', params);
-  conn.query(sql, [params.mobile, params.password,params.state], (err, result) => {
+  conn.query(sql, [params.mobile, params.password], (err, result) => {
     if (err) {
       console.log("提示：" + err);
     }
@@ -72,6 +72,24 @@ router.post('/loginlog',(req,res)=>{
       jsonWrite(res, result);  //
     } else {
       res.json({status:1,msg:"写入失败"})  //
+    }
+  })
+})
+
+//后端查询手机号是否存在
+router.post('/checkmobile',(req,res)=>{
+  var sql=$sql.login.checkmobile
+  var params=req.body
+  console.log('sql :', sql);
+  console.log('params :', params);
+  conn.query(sql, [params.mobile], (err, result) => {
+    if (err) {
+      console.log("提示：" + err);
+    }
+    if (result.length) {
+      res.json({isExistMobile:true});  //检测手机不用返回数据记录,返回结果就可以
+    } else {
+      res.json({isExistMobile:false});  
     }
   })
 })
@@ -121,49 +139,6 @@ router.delete('/deleteUser', (req, res) => {
       jsonWrite(res, result);
       // if(result.body.code==200){console.log("删除成功！")}
       console.log("删除成功！")
-    }
-  })
-})
-
-router.post('/cancelReader', (req, res) => {
-  var sql = $sql.reader.delete
-  var params = req.body
-  console.log(params)
-  conn.query(sql, [params.name], function (err, result) {
-    if (err) {
-      console.log(err)
-    }
-    if (result) {
-      jsonWrite(res, result)
-    }
-  })
-})
-
-router.get('/searchReader', (req, res) => {
-  var sql = $sql.reader.search      //sql 相当于 sqlMaps.js下的 reader:search 语句： select * from user where name=?
-  var params = req.query
-  console.log(params)
-  conn.query(sql, [params.name], function (err, result) {
-    if (err) {
-      console.log(err)
-    }
-    if (result) {
-      console.log(result)
-      res.send(result)
-    }
-  })
-})
-
-router.post('/readerBorrow', (req, res) => {
-  var sql = $sql.reader.borrowBook
-  var params = req.body
-  console.log(params)
-  conn.query(sql, [params.readerName, params.bookName], function (err, result) {
-    if (err) {
-      console.log(err)
-    }
-    if (result) {
-      jsonWrite(res, result)
     }
   })
 })
