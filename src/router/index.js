@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-17 23:42:20
+ * @LastEditTime: 2020-03-19 19:57:11
  * @描述: 
  */
 
@@ -41,10 +41,6 @@ const TestVant = () => import('views/TestVant')
     {
         path:'/register',
         component:Register
-    },
-    {
-        path:"/testmint",
-        component:TestMint
     },
     {
         path:"/testvant",

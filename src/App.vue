@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 11:45:57
+ * @LastEditTime: 2020-03-20 01:26:16
  * @描述: 
  -->
 <template>
@@ -18,7 +18,15 @@
       </div>
     </div>
 
-    <!-- <add-user></add-user> -->
+    <!-- TabBar -->
+    <van-tabbar v-model="active">
+      <van-tabbar-item icon="home-o">主页</van-tabbar-item>
+      <van-tabbar-item icon="shopping-cart-o">订餐</van-tabbar-item>
+      <van-tabbar-item icon="user-o">我的</van-tabbar-item>
+
+    </van-tabbar>
+
+
     <router-view></router-view>
   </div>
 </template>
@@ -29,7 +37,8 @@ export default {
   data() {
     return {
       name: "",
-      islogin:false
+      islogin:false,
+      active:0,
     };
   },
   methods: {
@@ -48,7 +57,7 @@ export default {
   computed: {
     getName() {
       console.log('name :',this.$store.state.user);
-      return this.name=this.$store.state.user?"【" + this.$store.state.user +"】":''
+      return this.name=this.$store.state.user?"【" + this.$store.state.user +"】"+this.$store.state.userid:''
     },
     
   },
