@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-17 21:49:53
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-20 01:00:08
+ * @LastEditTime: 2020-03-21 18:23:34
  * @描述: 
  -->
 
@@ -10,13 +10,13 @@
   <div class="login">
     <!-- 中国电信LOGO -->
     <!-- <van-image  :src="require('@/assets/img/china-telecom.jpg')" /> -->
-    <h3 style="margin:30px 0 20px;">密码登录</h3>
+    <h3 style="margin:30px 20px 20px 20px;text-align:center">密码登录</h3>
     <van-form @submit="onSubmit">
       <van-field ref='loginfield'
         v-model="mobile"
         type="number"
         name="mobile"
-        label-align="right"
+        label-align="left"
         label="用户名"
         placeholder="请输入手机号码"
         :rules="[{required:true,message:'请填写手机号码'}]"
@@ -28,6 +28,7 @@
         v-model="password"
         type="password"
         name="password"
+        label-align="left"
         label="密码"
         placeholder="请输入密码"
         :rules="[{required:true,message:'请填写密码'}]"
