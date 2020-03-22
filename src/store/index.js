@@ -14,7 +14,7 @@ Vue.use(Vuex)
 const state = {
     // user: window.sessionStorage.getItem('user'),
     // token: window.sessionStorage.getItem('token')
-    uid: window.localStorage.getItem('userid'),
+    userid: window.localStorage.getItem('userid'),
     user: window.localStorage.getItem('user'),
     token: window.localStorage.getItem('token'),
     islogin: window.localStorage.getItem('islogin'),

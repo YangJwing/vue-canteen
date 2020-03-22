@@ -96,6 +96,24 @@ router.post('/checkmobile', (req, res) => {
   })
 })
 
+//登记就餐数据入库
+router.post('/adddine', (req, res) => {
+  var sql = $sql.orders.adddine
+  var params = req.body
+  console.log('sql :', sql);
+  console.log('params :', params);
+  conn.query(sql, [params.userid, params.name, params.orderdate, params.breakfast,params.lunch, params.dinner], (err, result) => {
+    if (err) {
+      console.log("提示：" + err);
+    }
+    if (result.length) {
+      jsonWrite(res, result);  //
+    } else {
+      res.json({ status: 1, msg: "写入失败" })  //
+    }
+  })
+})
+
 // 查询用户接口，荣自己加入的 2020.2.26测试通过 ***************
 router.get('/searchUser', (req, res) => {
   var sql = $sql.user.search   //sql 相当于 sqlMaps.js下的 user(对象):search（属性） 语句： select * from user where name=?
