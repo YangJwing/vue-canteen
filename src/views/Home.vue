@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-23 00:06:29
+ * @LastEditTime: 2020-03-23 23:59:17
  * @描述: 
  -->
 <template>
@@ -19,8 +19,8 @@
       <!-- 订餐登记 -->
       <div class="order-group">
         <div class="order-title">
-          <van-tag class="tag-order" color="#f2826a" text-color="#fff" size="large">就餐登记</van-tag>
-          <div>{{dineDateFormat}}</div>
+          <van-tag class="tag-order" color="#f2826a" text-color="#fff" size="large">订餐登记</van-tag>
+          <div>{{dineDate.Format("m月d日 D")}} 订餐</div>
         </div>
         <div class="order-btn">
           <van-button
@@ -52,9 +52,7 @@
           ></van-button>
         </div>
         <div class="order-show">
-          <!-- <div v-show="dining.breakfast||dining.lunch||dining.dinner">你订了:</div> -->
-          <!-- <van-icon :dot="dining.breakfast||dining.lunch||dining.dinner" name="cart-o" size="35px" color="red" /> -->
-          <van-icon name="cart-o" size="35px" color="#666" :badge="count" />
+          <van-icon name="cart-o" size="35px" color="#666" :badge="cartCount" />
           <van-tag class="order-show-tag" type="success" v-show="dining.breakfast">早餐</van-tag>
           <van-tag class="order-show-tag" type="success" v-show="dining.lunch">午餐</van-tag>
           <van-tag class="order-show-tag" type="success" v-show="dining.dinner">晚餐</van-tag>
@@ -75,8 +73,8 @@
         </div>
       </div>
 
-      <!-- 报餐日期 -->
-      <div class="dine-date">{{dineDate}}</div>
+      <!-- 提交 -->
+      <div class="dine-date">{{dineDateFormat}}</div>
       <div style="margin:16px">
         <van-button
           round
@@ -107,75 +105,73 @@ export default {
         lunch: true,
         dinner: true
       },
-      count: "",
+      //显示购物车的数量
+      cartCount: "",
       //用户信息
       user: {
         name: "",
         sex: ""
       },
       //就餐日期(格式显示)
-      dineDateFormat: new Date(),
+      dineDateFormat: new Date().Format("yyyy年mm月dd日  D"),
       dineDate: new Date()
     };
   },
+
+  created() {
+    this.currentTime();
+    this.checkCanDine();
+    // this.test()
+  },
+
+  computed: {
+    getName() {
+      return (this.user.name = this.$store.state.user);
+    }
+  },
+
   methods: {
-    //提交
-    onSubmit() {
-      console.log("submitClick");
-      let order = {
-        userid: Number(this.$store.state.userid),
-        name: this.$store.state.user,
-        orderdate: this.dineDate.toLocaleDateString() ,
-        breakfast: Number(this.dining.breakfast),
-        lunch: Number(this.dining.lunch),
-        dinner: Number(this.dining.dinner)
-      };
-      //入库
-      this.$http
-        .post("/api/user/adddine", order, {})
-        .then(response => {
-          console.log("order OK");
-        })
-        .catch(err => {
-          console.log("错误:", err);
-          alert("错误代码: " + err.status + ", 错误信息:" + err.statusText);
-        });
+    test() {
+      let d = new Date();
+      console.log(d.getDayName());
+      console.log(d.Format("yyyy年mm月dd日 hh:MM:ss HH a D"));
     },
+
     //登记就餐
     dine(index) {
       switch (index) {
         case 0:
           this.dining.breakfast = !this.dining.breakfast;
-          this.dining.breakfast ? this.count++ : this.count--;
+          this.dining.breakfast ? this.cartCount++ : this.cartCount--;
           break;
         case 1:
           this.dining.lunch = !this.dining.lunch;
-          this.dining.lunch ? this.count++ : this.count--;
+          this.dining.lunch ? this.cartCount++ : this.cartCount--;
           break;
         case 2:
           this.dining.dinner = !this.dining.dinner;
-          this.dining.dinner ? this.count++ : this.count--;
+          this.dining.dinner ? this.cartCount++ : this.cartCount--;
           break;
       }
-      if (this.count == 0) this.count = "";
+      if (this.cartCount == 0) this.cartCount = "";
     },
 
     //判断能否登记订餐
     checkCanDine() {
       /* 判断：当前时间 > 18:00 登记日期=当前日期 + 1 = 明天
        * 　　　当前时间 < 16:00 登记日期=当前日期
-       *
        */
+
       let now = new Date();
       // now.setHours(9); //临时设成6点方便测试
       // now.setMinutes(59);
 
       const nowTime = now.getTime();
 
-      let breakfast_time = new Date();
-      let lunch_time = new Date();
-      let dinner_time = new Date();
-      let divider_time = new Date();
+      let breakfast_time = now;
+      let lunch_time = now;
+      let dinner_time = now;
+      let divider_time = now;
 
       //设置早餐时间为每天8点前
       breakfast_time.setHours(8);
@@ -191,17 +187,17 @@ export default {
       divider_time.setMinutes(0);
 
       //判断各餐段是否在截止前能登记
-      //判断当天
-      if (nowTime && nowTime < dinner_time.getTime()) {
+      //当前时间 < 16:00 登记当天的订餐记录
+      if (nowTime < dinner_time.getTime()) {
         this.canDine.breakfast =
           nowTime >= breakfast_time.getTime() ? false : true;
         this.canDine.lunch = nowTime >= lunch_time.getTime() ? false : true;
         this.canDine.dinner = nowTime >= dinner_time.getTime() ? false : true;
       } else if (nowTime > divider_time.getTime()) {
-        //日期+1
+        //当前时间 > 18:00 登记翌日的订餐记录(日期+1)
         this.dineDate.setDate(this.dineDate.getDate() + 1);
 
-        //重置标志
+        //重置订餐标志
         this.canDine.breakfast = true;
         this.canDine.lunch = true;
         this.canDine.dinner = true;
@@ -214,41 +210,65 @@ export default {
       var _this = this;
       // let now=new Date()
       let now = this.dineDate;
-      let yy = now.getFullYear();
-      let mm = now.getMonth() + 1;
-      let dd = now.getDate();
-      let hh = now.getHours();
-      let mf =
-        now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-      let ss =
-        now.getSeconds() < 10 ? "0" + now.getSeconds() : now.getSeconds();
-      let day = now.getDay();
-      let format = [
-        "星期日",
-        "星期一",
-        "星期二",
-        "星期三",
-        "星期四",
-        "星期五",
-        "星期六"
-      ];
-      day = format[day];
-
-      _this.dineDateFormat =
-        "就餐日期: " + /*yy + "年" +*/ mm + "月" + dd + "日  " + day; // + hh + ":" + mf + ":" + ss;
+      this.dineDateFormat = new Date().Format("m月d日 D");
     },
     //创建定时器
     currentTime() {
       setInterval(this.showTime, 500);
-    }
-  },
-  created() {
-    this.currentTime();
-    this.checkCanDine();
-  },
-  computed: {
-    getName() {
-      return (this.user.name = this.$store.state.user);
+    },
+    //提交
+    onSubmit() {
+      console.log("submitClick");
+      let cancel = false;
+      let order = {
+        userid: Number(this.$store.state.userid),
+        name: this.$store.state.user,
+        // 为了确保一天只能有一条记录,userid 和 orderdate 做了 unique ,所以不能有时间,否则不能唯一
+        orderdate: this.dineDate.Format("yyyy-mm-dd"),
+        breakfast: Number(this.dining.breakfast),
+        lunch: Number(this.dining.lunch),
+        dinner: Number(this.dining.dinner)
+      };
+      //不是当天的订单要确认
+      var msg=''
+      var o=this.dining
+      if (o.breakfast) msg="早餐"
+      if (o.lunch) msg=msg + (o.breakfast?'、':'') +"午餐"
+      if (o.dinner) msg=msg + (o.breakfast||o.lunch?'、':'') + "晚餐"
+      if (this.dineDate.getDate()>new Date().getDate()) {
+        console.log('明天的餐')
+
+        } else {
+        console.log('今天的餐')
+
+        }
+
+      this.$dialog
+        .confirm({
+          title: "请确认订单",
+          cancelButtonColor:"#e00",
+          cancelButtonText:"再想想",
+          message:
+            "是否要订: " + this.dineDate.Format("yyyy年m月d日 D \n\n")   + msg
+        })
+        .then(() => {
+          //on confirm
+          //订单入库
+          this.$http
+            .post("/api/user/adddine", order, {})
+            .then(response => {
+              console.log("订单写入成功 OK");
+              this.$notify({type:"success",message:"订餐成功!"});
+            })
+            .catch(err => {
+              console.log("错误:", err);
+              alert("错误代码: " + err.status + ", 错误信息:" + err.statusText);
+            });
+        })
+        .catch(() => {
+          // on Cancel
+          console.log('Dialog Cancel :');
+        });
     }
   }
 };
@@ -256,11 +276,12 @@ export default {
 
 <style >
 .home-nav {
-  background-color: rgb(247, 247, 247);
+  /* background-color: rgb(247, 247, 247); */
+  background-color: #398dee;
 }
 /* nav-bar 标题颜色 */
 .van-nav-bar__title {
-  color: #0088ff;
+  color: #fff;
 }
 .container {
   color: grey;

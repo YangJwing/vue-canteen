@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-20 20:01:46
+ * @LastEditTime: 2020-03-23 20:28:54
  * @描述: 
  -->
 <template>
@@ -53,7 +53,7 @@ export default {
     },
     getlogin(){
       this.islogin=this.$store.state.islogin
-      console.log('getlogin() this.$store.state.islogin :', this.$store.state.islogin);
+      // console.log('getlogin() this.$store.state.islogin :', this.$store.state.islogin);
     }
   },
   computed: {
