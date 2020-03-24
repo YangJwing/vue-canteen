@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-23 19:40:36
+ * @LastEditTime: 2020-03-24 23:25:39
  * @描述: 
  */
 // The Vue build version to load with the `import` command
@@ -22,7 +22,7 @@ import VueResource from 'vue-resource'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
-//引入日期时间格式化
+//引入日期时间格式化组件
 import '@/utils/dateFormat.js'
 
 Vue.use(VueResource)

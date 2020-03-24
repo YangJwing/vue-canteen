@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-23 20:28:54
+ * @LastEditTime: 2020-03-25 01:15:50
  * @描述: 
  -->
 <template>
@@ -18,11 +18,13 @@
       </div>
     </div> -->
 
+    <!-- NavBar -->
+    <van-nav-bar class="home-nav" :title="nav_title" fixed :right-text="this.$store.state.user1" />
     <!-- TabBar -->
-    <van-tabbar v-model="active" fiexed safe-area-inset-bottom>
+    <van-tabbar v-model="active" fiexed safe-area-inset-bottom @change="onChange">
       <!-- <van-tabbar-item to="/home" info="3" icon="home-o">主页</van-tabbar-item> -->
       <van-tabbar-item to="/home" dot icon="shopping-cart-o">订餐</van-tabbar-item>
-      <van-tabbar-item to="/testvant" icon="user-o">我的</van-tabbar-item>
+      <van-tabbar-item to="/About" icon="user-o" >我的</van-tabbar-item>
     </van-tabbar>
 
 
@@ -41,6 +43,7 @@ export default {
       name: "",
       islogin:false,
       active:0,
+      nav_title:"企石电信食堂订餐小程序",
     };
   },
   methods: {
@@ -54,7 +57,10 @@ export default {
     getlogin(){
       this.islogin=this.$store.state.islogin
       // console.log('getlogin() this.$store.state.islogin :', this.$store.state.islogin);
-    }
+    },
+    onChange(index){
+      if(index==1) this.nav_title="个人中心"
+    },
   },
   computed: {
     getName() {
@@ -70,6 +76,13 @@ export default {
 </script>
 
 <style>
+/* navbar 的颜色和底色 */
+  .home-nav{
+    background-color: #398dee;
+  }
+  .van-nav-bar__title {
+  color: #fff;
+}
   .van-tabbar{
     background-color:rgb(247,247,247);
   }

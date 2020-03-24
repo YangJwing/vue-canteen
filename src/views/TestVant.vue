@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:01:36
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-20 19:59:57
+ * @LastEditTime: 2020-03-24 22:21:05
  * @描述: 
  -->
 <template>
@@ -26,6 +26,9 @@
         </div>
       </div>
     </div>
+    <!-- 我的订餐记录 -->
+
+
   </div>
 </template>
 
@@ -48,6 +51,7 @@ export default {
 <style scope>
 .avatar {
   display: flex;
+  border-bottom: 5px solid #ddd;
 }
 .avatar-item {
   margin: 10px 10px 10px 10px;
@@ -64,4 +68,5 @@ export default {
   font-size: 12px;
   border-radius: 12px;
 }
+
 </style>

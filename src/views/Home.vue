@@ -2,13 +2,13 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-23 23:59:17
+ * @LastEditTime: 2020-03-25 00:03:27
  * @描述: 
  -->
 <template>
   <div class="home">
     <!-- <h3>这是首页</h3> -->
-    <van-nav-bar class="home-nav" title="企石电信食堂报餐系统" fixed :right-text="this.$store.state.user1" />
+    <van-nav-bar class="home-nav" title="企石电信食堂订餐小程序" fixed :right-text="this.$store.state.user1" />
     <div class="container">
       <!-- 人员信息 -->
       <div class="userinfo-group">
@@ -63,18 +63,21 @@
       <div class="notice-group">
         <van-tag class="tag-notice" color="#f2826a" size="large">订餐须知</van-tag>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" />早餐请提前一天18点前下单
+          <van-icon name="info" color="#fbe0dc" size="12px" /> 早餐当天8:00前订餐
         </div>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" />午餐上午10点前截止
+          <van-icon name="info" color="#fbe0dc" size="12px" /> 午餐当天10:00前订餐
         </div>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" />晚餐下午4点前截止
+          <van-icon name="info" color="#fbe0dc" size="12px" /> 晚餐当天下午4:00前订餐
+        </div>
+        <div class="notice-item">
+          <van-icon name="info" color="#fbe0dc" size="12px" /> 下午6:00后可订第二天餐
         </div>
       </div>
 
       <!-- 提交 -->
-      <div class="dine-date">{{dineDateFormat}}</div>
+      <!-- <div class="dine-date">{{dineDateFormat}}</div> -->
       <div style="margin:16px">
         <van-button
           round
@@ -275,14 +278,13 @@ export default {
 </script>
 
 <style >
-.home-nav {
-  /* background-color: rgb(247, 247, 247); */
+/* nav-bar 标题颜色和底色 */
+/* .home-nav {
   background-color: #398dee;
 }
-/* nav-bar 标题颜色 */
 .van-nav-bar__title {
   color: #fff;
-}
+} */
 .container {
   color: grey;
 }
@@ -290,7 +292,7 @@ export default {
   background-color: #fff;
   margin: 5px 0 5px 0;
   padding: 0px 0 15px 0;
-  border-bottom: 6px solid #eee;
+  border-bottom: 8px solid #eee;
 }
 .userinfo-group {
   display: flex;
