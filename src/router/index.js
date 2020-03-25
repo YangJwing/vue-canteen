@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 00:46:00
+ * @LastEditTime: 2020-03-25 21:26:12
  * @描述: 
  */
 
@@ -19,6 +19,7 @@ const Login = () => import('views/Login')
 const TestMint = () => import('views/TestMint')
 const About = () => import('views/about/About')
 const MyOrders = () => import('views/about/MyOrders')
+const OrderCount = () => import('views/about/OrderCount')
 
 const routes=[
      {
@@ -47,7 +48,11 @@ const routes=[
     {
         path:"/myorders",
         component:MyOrders
-    }
+    },
+    {
+        path:"/OrderCount",
+        component:OrderCount
+    },
 ]
 
 const router=new VueRouter({

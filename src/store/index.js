@@ -16,6 +16,7 @@ const state = {
     // token: window.sessionStorage.getItem('token')
     userid: window.localStorage.getItem('userid'),
     user: window.localStorage.getItem('user'),
+    role:window.localStorage.getItem('role'),
     token: window.localStorage.getItem('token'),
     islogin: window.localStorage.getItem('islogin'),
 }
@@ -27,6 +28,7 @@ const mutations = {
         // window.sessionStorage.setItem('token', data)
         window.localStorage.setItem('token', data)
     },
+    
     //获取用户名
     GET_USER: (state, data) => {
         // 把用户名存起来
@@ -40,6 +42,13 @@ const mutations = {
         state.userid=data
         window.localStorage.setItem('userid', data)
     },
+    //获取角色权限
+    GET_ROLE: (state, data) => {
+        // 把用户名存起来
+        state.role = data
+        // window.sessionStorage.setItem('user', data)
+        window.localStorage.setItem('role', data)
+    },
     SET_LOGIN:(state,data)=>{
         state.islogin=data
         window.localStorage.setItem('islogin', data)
@@ -50,10 +59,12 @@ const mutations = {
         state.token = null
         state.user = null
         state.userid= null
+        state.role= null
         state.islogin=false
         console.log('state.islogin :', state.islogin);
         window.localStorage.removeItem('token')
         window.localStorage.removeItem('user')
+        window.localStorage.removeItem('role')
         window.localStorage.removeItem('userid')
         window.localStorage.removeItem('islogin')
 

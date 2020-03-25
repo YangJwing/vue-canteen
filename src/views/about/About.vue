@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:01:36
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 01:05:48
+ * @LastEditTime: 2020-03-25 21:37:48
  * @描述: 
  -->
 <template>
@@ -24,7 +24,10 @@
       />
       <!-- 用户信息 -->
       <div class="avatar-item">
-        <div class="avatar-item userinfo user">{{getName}}</div>
+        <div class="avatar-item userinfo user">
+          {{name}}
+          <span v-if="role" style="font-size:12px;color:#666">（管理员)</span>
+        </div>
         <div class="avatar-item userinfo mobile">
           <van-icon name="phone-o" />13712796608
         </div>
@@ -44,6 +47,7 @@
 
     <!-- 关于... -->
     <van-cell-group>
+      <van-cell v-if="role" title="订餐情况统计表" value="管理员可进入" is-link to="/orderCount" />
       <van-cell title="我的订餐记录" is-link to="/myorders" />
       <van-cell title="关于订餐小程序" is-link />
       <van-cell title="注销我的登录" is-link @click.native="logout" />
@@ -55,22 +59,39 @@
 export default {
   data() {
     return {
-      name: ""
+      name: "",
+      role: null
     };
   },
   methods: {
     logout() {
-      this.$store.commit("LOGOUT");
-      this.$router.push("/login");
-      this.isLogin = false;
-      console.log("logout click");
-      console.log("logout() this.$store.islogin :", this.$store.islogin);
+      this.$dialog
+        .confirm({
+          title: "你确定要注销吗",
+          cancelButtonColor: "#e00",
+          cancelButtonText: "不要",
+          message: "注销我的登录，下次必须登录才能使用订餐程序！"
+        })
+        .then(() => {
+          //on confirm
+          //订单入库
+          this.$store.commit("LOGOUT");
+          this.$router.push("/login");
+          this.isLogin = false;
+          console.log("logout click");
+          console.log("logout() this.$store.islogin :", this.$store.islogin);
+        })
+        .catch(() => {
+          // on Cancel
+        });
+    },
+    getName() {
+      this.name = this.$store.state.user ? this.$store.state.user : "";
+      this.role = this.$store.state.role ? this.$store.state.role : "";
     }
   },
-  computed: {
-    getName() {
-      return (this.name = this.$store.state.user ? this.$store.state.user : "");
-    }
+  created() {
+    this.getName();
   }
 };
 </script>

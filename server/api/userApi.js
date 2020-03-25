@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
   })
 })
 
-//后端密码校验
+//后端密码登录验证
 router.post('/logincheck', (req, res) => {
   var sql = $sql.user.logincheck
   var params = req.body
@@ -114,7 +114,54 @@ router.post('/adddine', (req, res) => {
   })
 })
 
-// 查询用户接口，荣自己加入的 2020.2.26测试通过 ***************
+// 查询用户订餐记录
+router.get('/myorders', (req, res) => {
+  var sql = $sql.orders.myorders   //sql 相当于 sqlMaps.js下的 user(对象):search（属性） 语句： select * from user where name=?
+  var params = req.query
+  console.log('sql :', sql);
+  console.log("荣params:", params);
+  conn.query(sql, [params.userid], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      res.send(result)
+    }
+  })
+})
+
+// 查询订餐分类合计
+router.get('/ordercount', (req, res) => {
+  var sql = $sql.orders.ordercount   
+  var params = req.query
+  // console.log('sql :', sql);
+  // console.log("荣params:", params);
+  conn.query(sql, [params.orderdate], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      res.send(result)
+    }
+  })
+})
+// 查询订餐分类~姓名
+router.get('/orderdetails', (req, res) => {
+  var sql = $sql.orders.orderdetails   
+  var params = req.query
+  console.log('sql :', sql);
+  console.log("荣params:", params);
+  conn.query(sql, [params.orderdate], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      res.send(result)
+    }
+  })
+})
+
+// 查询用户接口，荣加入的 2020.2.26测试通过 ***************
 router.get('/searchUser', (req, res) => {
   var sql = $sql.user.search   //sql 相当于 sqlMaps.js下的 user(对象):search（属性） 语句： select * from user where name=?
   var params = req.query

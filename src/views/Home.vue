@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 00:03:27
+ * @LastEditTime: 2020-03-25 20:00:54
  * @描述: 
  -->
 <template>
@@ -20,7 +20,11 @@
       <div class="order-group">
         <div class="order-title">
           <van-tag class="tag-order" color="#f2826a" text-color="#fff" size="large">订餐登记</van-tag>
-          <div>{{dineDate.Format("m月d日 D")}} 订餐</div>
+          <div>
+            {{dineDate.Format("m月d日 D")}}
+            <span v-if="canDine.dinner">订餐</span>
+            <span style="color:red;" v-else="!canDine.dinner">订餐时间已过</span>
+          </div>
         </div>
         <div class="order-btn">
           <van-button
@@ -54,8 +58,14 @@
         <div class="order-show">
           <van-icon name="cart-o" size="35px" color="#666" :badge="cartCount" />
           <van-tag class="order-show-tag" type="success" v-show="dining.breakfast">早餐</van-tag>
-          <van-tag class="order-show-tag" type="success" v-show="dining.lunch">午餐</van-tag>
-          <van-tag class="order-show-tag" type="success" v-show="dining.dinner">晚餐</van-tag>
+          <van-tag class="order-show-tag" type="primary" v-show="dining.lunch">午餐</van-tag>
+          <van-tag class="order-show-tag" type="warning" v-show="dining.dinner">晚餐</van-tag>
+          <van-tag
+            class="order-show-tag"
+            type="danger"
+            v-show="!canDine.dinner"
+            @click="tagOnClick"
+          >今天订餐时间已过，6点后再开放订餐</van-tag>
         </div>
       </div>
 
@@ -63,16 +73,16 @@
       <div class="notice-group">
         <van-tag class="tag-notice" color="#f2826a" size="large">订餐须知</van-tag>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" /> 早餐当天8:00前订餐
+          <van-icon name="info" color="#fbe0dc" size="12px" />早餐当天 8:00 前订餐
         </div>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" /> 午餐当天10:00前订餐
+          <van-icon name="info" color="#fbe0dc" size="12px" />午餐当天 10:00 前订餐
         </div>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" /> 晚餐当天下午4:00前订餐
+          <van-icon name="info" color="#fbe0dc" size="12px" />晚餐当天下午 4:00 前订餐
         </div>
         <div class="notice-item">
-          <van-icon name="info" color="#fbe0dc" size="12px" /> 下午6:00后可订第二天餐
+          <van-icon name="info" color="#fbe0dc" size="12px" />下午 6:00 后可订第二天餐
         </div>
       </div>
 
@@ -116,17 +126,10 @@ export default {
         sex: ""
       },
       //就餐日期(格式显示)
-      dineDateFormat: new Date().Format("yyyy年mm月dd日  D"),
       dineDate: new Date()
+      // dineDateFormat: new Date().Format("yyyy年mm月dd日  D"),
     };
   },
-
-  created() {
-    this.currentTime();
-    this.checkCanDine();
-    // this.test()
-  },
-
   computed: {
     getName() {
       return (this.user.name = this.$store.state.user);
@@ -139,7 +142,6 @@ export default {
       console.log(d.getDayName());
       console.log(d.Format("yyyy年mm月dd日 hh:MM:ss HH a D"));
     },
-
     //登记就餐
     dine(index) {
       switch (index) {
@@ -158,23 +160,19 @@ export default {
       }
       if (this.cartCount == 0) this.cartCount = "";
     },
-
     //判断能否登记订餐
     checkCanDine() {
       /* 判断：当前时间 > 18:00 登记日期=当前日期 + 1 = 明天
        * 　　　当前时间 < 16:00 登记日期=当前日期
        */
-
       let now = new Date();
       // now.setHours(9); //临时设成6点方便测试
       // now.setMinutes(59);
-
       const nowTime = now.getTime();
-
-      let breakfast_time = now;
-      let lunch_time = now;
-      let dinner_time = now;
-      let divider_time = now;
+      let breakfast_time = new Date();
+      let lunch_time = new Date();
+      let dinner_time = new Date();
+      let divider_time = new Date();
 
       //设置早餐时间为每天8点前
       breakfast_time.setHours(8);
@@ -191,34 +189,52 @@ export default {
 
       //判断各餐段是否在截止前能登记
       //当前时间 < 16:00 登记当天的订餐记录
-      if (nowTime < dinner_time.getTime()) {
-        this.canDine.breakfast =
-          nowTime >= breakfast_time.getTime() ? false : true;
-        this.canDine.lunch = nowTime >= lunch_time.getTime() ? false : true;
-        this.canDine.dinner = nowTime >= dinner_time.getTime() ? false : true;
-      } else if (nowTime > divider_time.getTime()) {
-        //当前时间 > 18:00 登记翌日的订餐记录(日期+1)
-        this.dineDate.setDate(this.dineDate.getDate() + 1);
+      // if (nowTime < dinner_time.getTime()) {
+      //   this.canDine.breakfast = (nowTime >= breakfast_time.getTime()) ? false : true;
+      //   this.canDine.lunch = nowTime >= lunch_time.getTime() ? false : true;
+      //   this.canDine.dinner = nowTime >= dinner_time.getTime() ? false : true;
 
+      //   console.log('nowTime: %s , breakfast_time: %s',new Date().getHours(),breakfast_time.getHours());
+      //   console.log('breakfast:%s ,lunch:%s , dinner: %s', this.canDine.breakfast,this.canDine.lunch,this.canDine.dinner);
+      // } else if (nowTime>divider_time.getTime()) {
+      //   //当前时间 > 18:00 登记翌日的订餐记录(日期+1)
+      //   this.dineDate.setDate(this.dineDate.getDate() + 1);
+      //   //重置订餐标志
+      //   this.canDine.breakfast = true;
+      //   this.canDine.lunch = true;
+      //   this.canDine.dinner = true;
+      //   console.log("--------重置为TRUE ------");
+      // }
+
+      this.canDine.breakfast = nowTime >= breakfast_time.getTime() ? false : true;
+      this.canDine.lunch = nowTime >= lunch_time.getTime() ? false : true;
+      this.canDine.dinner = nowTime >= dinner_time.getTime() ? false : true;
+
+      if (nowTime >= divider_time.getTime()) {
+        //当前时间 >= 18:00 登记翌日的订餐记录(日期 + 1)
+        if (this.dineDate.getDate() == new Date().getDate()) {
+          this.dineDate.setDate(this.dineDate.getDate() + 1);
+        }
         //重置订餐标志
         this.canDine.breakfast = true;
         this.canDine.lunch = true;
         this.canDine.dinner = true;
-        console.log("--------重置为TRUE ------");
+        // console.log("--------重置为TRUE ------");
       }
-    },
-
-    //取得当前日期时间
-    showTime() {
-      var _this = this;
-      // let now=new Date()
-      let now = this.dineDate;
-      this.dineDateFormat = new Date().Format("m月d日 D");
+      console.log(
+        "当前日期： %s , 登记日期： %s",
+        new Date().getDate(),
+        this.dineDate.getDate()
+      );
+      // console.log('nowTime: %s , b_time: %s, l_time: %s, d_time : %s',new Date().getHours(),breakfast_time.getHours(),lunch_time.getHours(),dinner_time.getHours());
+      // console.log('can.breakfast: %s ,can.lunch: %s , can.dinner: %s', this.canDine.breakfast,this.canDine.lunch,this.canDine.dinner);
     },
     //创建定时器
     currentTime() {
-      setInterval(this.showTime, 500);
+      setInterval(this.checkCanDine, 1000 * 60);
     },
+    //点击标签
+    tagOnClick() {},
     //提交
     onSubmit() {
       console.log("submitClick");
@@ -233,26 +249,23 @@ export default {
         dinner: Number(this.dining.dinner)
       };
       //不是当天的订单要确认
-      var msg=''
-      var o=this.dining
-      if (o.breakfast) msg="早餐"
-      if (o.lunch) msg=msg + (o.breakfast?'、':'') +"午餐"
-      if (o.dinner) msg=msg + (o.breakfast||o.lunch?'、':'') + "晚餐"
-      if (this.dineDate.getDate()>new Date().getDate()) {
-        console.log('明天的餐')
-
-        } else {
-        console.log('今天的餐')
-
-        }
-
+      var msg = "";
+      var o = this.dining;
+      if (o.breakfast) msg = "早餐";
+      if (o.lunch) msg = msg + (o.breakfast ? "、" : "") + "午餐";
+      if (o.dinner) msg = msg + (o.breakfast || o.lunch ? "、" : "") + "晚餐";
+      if (this.dineDate.getDate() > new Date().getDate()) {
+        console.log("明天的餐");
+      } else {
+        console.log("今天的餐");
+      }
       this.$dialog
         .confirm({
           title: "请确认订单",
-          cancelButtonColor:"#e00",
-          cancelButtonText:"再想想",
+          cancelButtonColor: "#e00",
+          cancelButtonText: "再想想",
           message:
-            "是否要订: " + this.dineDate.Format("yyyy年m月d日 D \n\n")   + msg
+            "是否要订: " + this.dineDate.Format("yyyy年m月d日 D \n\n") + msg
         })
         .then(() => {
           //on confirm
@@ -261,7 +274,7 @@ export default {
             .post("/api/user/adddine", order, {})
             .then(response => {
               console.log("订单写入成功 OK");
-              this.$notify({type:"success",message:"订餐成功!"});
+              this.$notify({ type: "success", message: "订餐成功!" });
             })
             .catch(err => {
               console.log("错误:", err);
@@ -270,9 +283,15 @@ export default {
         })
         .catch(() => {
           // on Cancel
-          console.log('Dialog Cancel :');
+          console.log("Dialog Cancel :");
         });
     }
+  },
+
+  created() {
+    this.checkCanDine();
+    this.currentTime();
+    // this.test()
   }
 };
 </script>

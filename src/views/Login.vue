@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-17 21:49:53
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-21 18:23:34
+ * @LastEditTime: 2020-03-25 20:00:35
  * @描述: 
  -->
 
@@ -61,7 +61,7 @@ export default {
       console.log("register click");
       this.$router.push("/register");
     },
-    //提交密码校验
+    //提交密码校验 (values为form表单submit的回调参数)
     onSubmit(values) {
       let loginData = values;
       this.$http
@@ -77,8 +77,10 @@ export default {
             console.log("this.state.token:", this.$store.state.token);
 
             //获得用户名和ID
-            this.$store.commit("GET_USER", response.body[0].name);
             this.$store.commit("GET_USERID", response.body[0].id);
+            this.$store.commit("GET_USER", response.body[0].name);
+            this.$store.commit("GET_ROLE", response.body[0].role);
+
             // console.log('user :', this.$store.state.user);
 
             loginData.name = response.body[0].name;
