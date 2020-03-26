@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 14:32:54
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-26 01:23:35
+ * @LastEditTime: 2020-03-26 17:44:30
  * @描述: 
  */
 //参考出处  https://blog.csdn.net/weixin_42003850/article/details/100511566   on 2020/02/18
@@ -31,10 +31,14 @@ var sqlMap = {
     adddine:'replace into orders(userid,name,orderdate,breakfast,lunch,dinner) values(?,?,?,?,?,?)',
     myorders:'select orderdate,breakfast,lunch,dinner from orders where userid = ? order by orderdate desc',
     ordercount:'select sum(breakfast) breakfast,sum(lunch) lunch, sum(dinner) dinner from orders where orderdate= ? ',
-    orderdetails:'select name from orders where breakfast=1 and orderdate = ?',
-
-  }
-
+    orderdetails_b:'select name from orders where breakfast=1 and orderdate = ? order by CONVERT(name USING gbk) ',
+    orderdetails_l:'select name from orders where lunch=1 and orderdate = ? order by CONVERT(name USING gbk) ',
+    orderdetails_d:'select name from orders where dinner=1 and orderdate = ? order by CONVERT(name USING gbk) ',
+  },
+ //建议表
+ suggestion: {
+  addsuggestion: 'insert into suggestion(userid,type,description) values( ?, ?, ?)',   //记录建议
+},
 }
 
 module.exports = sqlMap;

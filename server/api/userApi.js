@@ -145,9 +145,9 @@ router.get('/ordercount', (req, res) => {
     }
   })
 })
-// 查询订餐分类~姓名
-router.get('/orderdetails', (req, res) => {
-  var sql = $sql.orders.orderdetails   
+// 查询订餐分类~姓名 breakfast
+router.get('/orderdetails_b', (req, res) => {
+  var sql = $sql.orders.orderdetails_b   
   var params = req.query
   console.log('sql :', sql);
   console.log("荣params:", params);
@@ -157,6 +157,54 @@ router.get('/orderdetails', (req, res) => {
     }
     if (result) {
       res.send(result)
+    }
+  })
+})
+// 查询订餐分类~姓名 lunch
+router.get('/orderdetails_l', (req, res) => {
+  var sql = $sql.orders.orderdetails_l   
+  var params = req.query
+  console.log('sql :', sql);
+  console.log("荣params:", params);
+  conn.query(sql, [params.orderdate], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      res.send(result)
+    }
+  })
+})
+// 查询订餐分类~姓名 dinner
+router.get('/orderdetails_d', (req, res) => {
+  var sql = $sql.orders.orderdetails_d   
+  var params = req.query
+  console.log('sql :', sql);
+  console.log("荣params:", params);
+  conn.query(sql, [params.orderdate], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      res.send(result)
+    }
+  })
+})
+
+//登记建议数据入库
+router.post('/addsuggestion', (req, res) => {
+  var sql = $sql.suggestion.addsuggestion
+  var params = req.body
+  console.log('sql :', sql);
+  console.log('params :', params);
+  conn.query(sql, [params.userid, params.type, params.description], (err, result) => {
+    if (err) {
+      console.log("提示：" + err);
+    }
+    if (result.length) {
+      jsonWrite(res, result);  //
+    } else {
+      res.json({ status: 1, msg: "写入失败" })  //
     }
   })
 })

@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 01:15:50
+ * @LastEditTime: 2020-03-26 13:19:39
  * @描述: 
  -->
 <template>
@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 /* navbar 的颜色和底色 */
   .home-nav{
     background-color: #398dee;

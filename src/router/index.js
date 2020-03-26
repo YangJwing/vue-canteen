@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 21:26:12
+ * @LastEditTime: 2020-03-26 13:16:07
  * @描述: 
  */
 
@@ -18,8 +18,9 @@ const Register = () => import('views/Register')
 const Login = () => import('views/Login')
 const TestMint = () => import('views/TestMint')
 const About = () => import('views/about/About')
-const MyOrders = () => import('views/about/MyOrders')
-const OrderCount = () => import('views/about/OrderCount')
+const MyOrders = () => import('views/about/myorders')
+const OrderCount = () => import('views/about/ordercount')
+const Suggest = () => import('views/about/suggest')
 
 const routes=[
      {
@@ -52,6 +53,10 @@ const routes=[
     {
         path:"/OrderCount",
         component:OrderCount
+    },
+    {
+        path:"/suggest",
+        component:Suggest
     },
 ]
 

@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:01:36
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 21:37:48
+ * @LastEditTime: 2020-03-26 13:14:58
  * @描述: 
  -->
 <template>
@@ -50,6 +50,7 @@
       <van-cell v-if="role" title="订餐情况统计表" value="管理员可进入" is-link to="/orderCount" />
       <van-cell title="我的订餐记录" is-link to="/myorders" />
       <van-cell title="关于订餐小程序" is-link />
+      <van-cell title="意见反馈" is-link to="/suggest" />
       <van-cell title="注销我的登录" is-link @click.native="logout" />
     </van-cell-group>
   </div>
