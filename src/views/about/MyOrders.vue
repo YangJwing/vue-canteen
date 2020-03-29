@@ -2,38 +2,28 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-25 00:40:22
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 23:08:01
+ * @LastEditTime: 2020-03-30 00:46:44
  * @描述: 
  -->
 
 <template>
   <div class="my-orders">
-    <van-nav-bar  title="订餐记录" left-arrow left-text="返回" @click-left="onClickLeft" />
+    <van-nav-bar title="订餐记录" left-arrow left-text="返回" @click-left="onClickLeft" />
     <div class="orderdetail">
       <van-cell title="日期" icon="clock-o" value="订餐情况">
-  <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-  <template #right-icon>
-    <van-icon
-      name="eye-o"
-      style="line-height: inherit;"
-    />
-  </template>
-</van-cell>
-      <van-cell
-        v-for="item in orders"
-        key="item"
-        
-        label=""
-        :title="item.orderdate"
-      >
+        <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+        <template #right-icon>
+          <van-icon name="eye-o" style="line-height: inherit;" />
+        </template>
+      </van-cell>
+      <van-cell v-for="item in orders" key="item" label :title="item.orderdate">
         <!-- 用 title 插槽来自定义标题 -->
         <template #default>
           <van-tag class="right-tag" v-show="item.breakfast" type="success">早餐</van-tag>
-          <van-tag class="right-tag" v-show="item.lunch"  type="primary">午餐</van-tag>
+          <van-tag class="right-tag" v-show="item.lunch" type="primary">午餐</van-tag>
           <van-tag class="right-tag" v-show="item.dinner" type="warning">晚餐</van-tag>
         </template>
       </van-cell>
-
     </div>
   </div>
 </template>
@@ -89,7 +79,7 @@ export default {
   color: #000;
 }
 /* 解决订餐记录标签不能上对齐 */
-.van-tag.right-tag{
-  margin: -5px 5px 0 -5px;  
+.van-tag.right-tag {
+  margin: -5px 5px 0 -5px;
 }
 </style>

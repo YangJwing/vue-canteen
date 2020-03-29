@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 20:00:54
+ * @LastEditTime: 2020-03-28 09:08:58
  * @描述: 
  -->
 <template>
@@ -206,21 +206,32 @@ export default {
       //   console.log("--------重置为TRUE ------");
       // }
 
-      this.canDine.breakfast = nowTime >= breakfast_time.getTime() ? false : true;
+      this.canDine.breakfast =
+        nowTime >= breakfast_time.getTime() ? false : true;
       this.canDine.lunch = nowTime >= lunch_time.getTime() ? false : true;
       this.canDine.dinner = nowTime >= dinner_time.getTime() ? false : true;
 
-      if (nowTime >= divider_time.getTime()) {
+      if (nowTime >= divider_time.getTime()) { //登记在第二天
         //当前时间 >= 18:00 登记翌日的订餐记录(日期 + 1)
-        if (this.dineDate.getDate() == new Date().getDate()) {
           this.dineDate.setDate(this.dineDate.getDate() + 1);
-        }
+        // if (this.dineDate.getDate() == new Date().getDate()) {
+        //   // this.dineDate.setDate(this.dineDate.getDate() + 1);
+        //   //排除星期六日（星期六日不订餐）
+        //   if (this.dineDate.getDay() == 5) {
+        //     this.dineDate.setDate(this.dineDate.getDate() + 3);
+        //   }else if (this.dineDate.getDay() == 6) {
+        //     this.dineDate.setDate(this.dineDate.getDate() + 2);
+        //   } else {
+        //     this.dineDate.setDate(this.dineDate.getDate() + 1);
+        //   }
+        // }
         //重置订餐标志
         this.canDine.breakfast = true;
         this.canDine.lunch = true;
         this.canDine.dinner = true;
         // console.log("--------重置为TRUE ------");
-      }
+      } 
+
       console.log(
         "当前日期： %s , 登记日期： %s",
         new Date().getDate(),

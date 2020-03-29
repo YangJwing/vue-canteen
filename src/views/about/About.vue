@@ -2,14 +2,14 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:01:36
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-26 13:14:58
+ * @LastEditTime: 2020-03-30 00:37:39
  * @描述: 
  -->
 <template>
   <div id="about">
     <van-notice-bar
       mode="closeable"
-    >中国电信东莞企石分公司食堂订餐小程序 Ver1.0 正式上线，使用过程中欢迎提出宝贵建议，建议请发到 yangjwing@163.com ，谢谢！</van-notice-bar>
+    >中国电信东莞企石分公司食堂订餐小程序 Ver1.0 正式上线，使用过程中欢迎提出宝贵建议，请到“意见反馈里”提交 ，谢谢！</van-notice-bar>
     <!-- <van-card :thumb="require('@/assets/img/avatar.jpg')" :title="getName" /> -->
 
     <!-- 头像 -->
@@ -49,6 +49,7 @@
     <van-cell-group>
       <van-cell v-if="role" title="订餐情况统计表" value="管理员可进入" is-link to="/orderCount" />
       <van-cell title="我的订餐记录" is-link to="/myorders" />
+      <van-cell title="设置" is-link to="/setup" />
       <van-cell title="关于订餐小程序" is-link />
       <van-cell title="意见反馈" is-link to="/suggest" />
       <van-cell title="注销我的登录" is-link @click.native="logout" />

@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-25 21:22:40
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-26 13:08:11
+ * @LastEditTime: 2020-03-30 00:23:20
  * @描述: 
  -->
 <template>
@@ -10,13 +10,27 @@
     <van-nav-bar title="订餐情况统计" left-arrow left-text="返回" @click-left="$router.go(-1)" />
     <div class="count-group">
       <!-- <van-cell :title="dineDate" is-link value="详情" @click="selectDate"> -->
-      <van-cell :title="showdate" value="详情" is-link @click="show = true">
+      <van-cell >
+        <template #title>
+          <span @click="show=true" >{{showdate}}</span>
+          <van-tag type="success">选择日期</van-tag>
+        </template>
         <template #right-icon>
-          <van-icon name="orders-o" style="line-height: inherit;" />
+          <van-icon
+            name="orders-o"
+            style="line-height: inherit;"
+            @click.native.prevent="iconClick"
+          />
         </template>
       </van-cell>
       <!--选择日期 -->
-      <van-calendar v-model="show" :show-confirm="false" :min-date="minDate" :default-date="defaultDate" @confirm="onConfirm" />
+      <van-calendar
+        v-model="show"
+        :show-confirm="false"
+        :min-date="minDate"
+        :default-date="defaultDate"
+        @confirm="onConfirm"
+      />
 
       <van-grid :column-num="3">
         <van-grid-item
@@ -50,35 +64,35 @@ export default {
   data() {
     return {
       count: { breakfast: 0, lunch: 0, dinner: 0 },
-      selectDining:'',
+      selectDining: "",
       names: [],
       show: false,
-      orderdate: new Date().Format('yyyy/mm/dd'),
-      showdate:new Date().Format('m月d日 D'),
-      minDate:new Date(2020,0,1),
-      defaultDate:new Date(),
+      orderdate: new Date().Format("yyyy/mm/dd"),
+      showdate: new Date().Format("m月d日 D"),
+      minDate: new Date(2020, 0, 1),
+      defaultDate: new Date()
     };
   },
   methods: {
     onConfirm(date) {
-      console.log('date :', date);
+      console.log("date :", date);
       this.show = false;
-      this.orderdate = date.Format('yyyy/mm/dd')
-      this.showdate=date.Format('m月d日 D')
+      this.orderdate = date.Format("yyyy/mm/dd");
+      this.showdate = date.Format("m月d日 D");
       //调用
-      this.orderCount()
+      this.orderCount();
     },
     orderCount() {
-      let orderdate = this.orderdate
-      console.log('this.orderdate :', this.orderdate);
+      let orderdate = this.orderdate;
+      console.log("this.orderdate :", this.orderdate);
       this.$http
         .get("/api/user/ordercount", { params: { orderdate: orderdate } })
         .then(response => {
           // console.log('response :', response);
           var body = response.body[0];
-          this.count.breakfast = response.body[0].breakfast||0;
-          this.count.lunch = response.body[0].lunch||0;
-          this.count.dinner = response.body[0].dinner||0;
+          this.count.breakfast = response.body[0].breakfast || 0;
+          this.count.lunch = response.body[0].lunch || 0;
+          this.count.dinner = response.body[0].dinner || 0;
         });
     },
     //分类查找订餐人员清单
@@ -87,9 +101,15 @@ export default {
         orderdate: this.orderdate
       };
       let s;
-      if (dining == "breakfast") {s = "/api/user/orderdetails_b",this.selectDining='早餐'}
-      if (dining == "lunch") {s = "/api/user/orderdetails_l",this.selectDining='午餐'}
-      if (dining == "dinner") {s = "/api/user/orderdetails_d",this.selectDining='晚餐'}
+      if (dining == "breakfast") {
+        (s = "/api/user/orderdetails_b"), (this.selectDining = "早餐");
+      }
+      if (dining == "lunch") {
+        (s = "/api/user/orderdetails_l"), (this.selectDining = "午餐");
+      }
+      if (dining == "dinner") {
+        (s = "/api/user/orderdetails_d"), (this.selectDining = "晚餐");
+      }
       // console.log("s :", s);
       this.$http.get(s, { params: obj }).then(response => {
         // console.log("人员response :", response);
@@ -97,7 +117,9 @@ export default {
         // console.log("this.names :", this.names);
       });
     },
-    selectDate() {}
+    iconClick() {
+      this.$toast("icon Click");
+    }
   },
   created() {
     this.orderCount();
@@ -110,12 +132,12 @@ export default {
 .van-nav-bar__title {
   color: #000;
 }
-.select-dining{
-  margin:10px 0 10px 10px;
-  color:#666;
+.select-dining {
+  margin: 10px 0 10px 10px;
+  color: #666;
   border-bottom: 1px solid #eee;
 }
-.van-tag.van-tag--plain.van-tag--primary.van-hairline--surround{
-  margin:5px 5px 5px 5px;
+.van-tag.van-tag--plain.van-tag--primary.van-hairline--surround {
+  margin: 5px 5px 5px 5px;
 }
 </style>

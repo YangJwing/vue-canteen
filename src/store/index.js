@@ -46,7 +46,6 @@ const mutations = {
     GET_ROLE: (state, data) => {
         // 把用户名存起来
         state.role = data
-        // window.sessionStorage.setItem('user', data)
         window.localStorage.setItem('role', data)
     },
     SET_LOGIN:(state,data)=>{

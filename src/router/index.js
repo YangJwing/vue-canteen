@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-26 13:16:07
+ * @LastEditTime: 2020-03-30 00:39:55
  * @描述: 
  */
 
@@ -21,6 +21,7 @@ const About = () => import('views/about/About')
 const MyOrders = () => import('views/about/myorders')
 const OrderCount = () => import('views/about/ordercount')
 const Suggest = () => import('views/about/suggest')
+const Setup = () => import('views/about/setup')
 
 const routes=[
      {
@@ -57,6 +58,10 @@ const routes=[
     {
         path:"/suggest",
         component:Suggest
+    },
+    {
+        path:"/setup",
+        component:Setup
     },
 ]
 
