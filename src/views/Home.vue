@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-28 09:08:58
+ * @LastEditTime: 2020-04-05 22:23:26
  * @描述: 
  -->
 <template>
@@ -187,15 +187,15 @@ export default {
       divider_time.setHours(18);
       divider_time.setMinutes(0);
 
-      //判断各餐段是否在截止前能登记
-      //当前时间 < 16:00 登记当天的订餐记录
+      // //判断各餐段是否在截止前能登记
+      // //当前时间 < 16:00 登记当天的订餐记录
       // if (nowTime < dinner_time.getTime()) {
       //   this.canDine.breakfast = (nowTime >= breakfast_time.getTime()) ? false : true;
       //   this.canDine.lunch = nowTime >= lunch_time.getTime() ? false : true;
       //   this.canDine.dinner = nowTime >= dinner_time.getTime() ? false : true;
 
-      //   console.log('nowTime: %s , breakfast_time: %s',new Date().getHours(),breakfast_time.getHours());
-      //   console.log('breakfast:%s ,lunch:%s , dinner: %s', this.canDine.breakfast,this.canDine.lunch,this.canDine.dinner);
+      //   // console.log('nowTime: %s , breakfast_time: %s',new Date().getHours(),breakfast_time.getHours());
+      //   // console.log('breakfast:%s ,lunch:%s , dinner: %s', this.canDine.breakfast,this.canDine.lunch,this.canDine.dinner);
       // } else if (nowTime>divider_time.getTime()) {
       //   //当前时间 > 18:00 登记翌日的订餐记录(日期+1)
       //   this.dineDate.setDate(this.dineDate.getDate() + 1);
@@ -213,7 +213,8 @@ export default {
 
       if (nowTime >= divider_time.getTime()) { //登记在第二天
         //当前时间 >= 18:00 登记翌日的订餐记录(日期 + 1)
-          this.dineDate.setDate(this.dineDate.getDate() + 1);
+          this.dineDate.setDate(new Date().getDate() + 1);
+
         // if (this.dineDate.getDate() == new Date().getDate()) {
         //   // this.dineDate.setDate(this.dineDate.getDate() + 1);
         //   //排除星期六日（星期六日不订餐）

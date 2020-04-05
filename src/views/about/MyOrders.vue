@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-25 00:40:22
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-30 00:46:44
+ * @LastEditTime: 2020-04-05 21:44:56
  * @描述: 
  -->
 
@@ -12,16 +12,19 @@
     <div class="orderdetail">
       <van-cell title="日期" icon="clock-o" value="订餐情况">
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-        <template #right-icon>
+        <!-- <template #right-icon>
           <van-icon name="eye-o" style="line-height: inherit;" />
-        </template>
+        </template> -->
       </van-cell>
       <van-cell v-for="item in orders" key="item" label :title="item.orderdate">
         <!-- 用 title 插槽来自定义标题 -->
         <template #default>
           <van-tag class="right-tag" v-show="item.breakfast" type="success">早餐</van-tag>
+          <van-tag class="right-tag" v-show="!item.breakfast" plain >早餐</van-tag>
           <van-tag class="right-tag" v-show="item.lunch" type="primary">午餐</van-tag>
+          <van-tag class="right-tag" v-show="!item.lunch" plain >午餐</van-tag>
           <van-tag class="right-tag" v-show="item.dinner" type="warning">晚餐</van-tag>
+          <van-tag class="right-tag" v-show="!item.dinner" plain >晚餐</van-tag>
         </template>
       </van-cell>
     </div>

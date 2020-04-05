@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:01:36
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-30 00:37:39
+ * @LastEditTime: 2020-04-06 00:59:43
  * @描述: 
  -->
 <template>
@@ -47,12 +47,13 @@
 
     <!-- 关于... -->
     <van-cell-group>
-      <van-cell v-if="role" title="订餐情况统计表" value="管理员可进入" is-link to="/orderCount" />
-      <van-cell title="我的订餐记录" is-link to="/myorders" />
-      <van-cell title="设置" is-link to="/setup" />
-      <van-cell title="关于订餐小程序" is-link />
-      <van-cell title="意见反馈" is-link to="/suggest" />
-      <van-cell title="注销我的登录" is-link @click.native="logout" />
+      <van-cell v-if="role" title="订餐情况统计表" icon="cart-o" value="管理员可进入" is-link to="/orderCount" />
+      <van-cell title="订餐记录" icon="todo-list-o" is-link to="/myorders" />
+      <van-cell title="设置" icon="setting-o" is-link to="/setup" />
+      <van-cell title="帮助" icon="question-o" is-link to="/help" />
+      <van-cell title="问题与建议" icon="records" is-link to="/suggest" />
+      <van-cell title="关于" icon="info-o" is-link to="/aboutme" />
+      <van-cell title="注销我的登录" icon="close" is-link @click.native="logout" />
     </van-cell-group>
   </div>
 </template>
@@ -62,7 +63,7 @@ export default {
   data() {
     return {
       name: "",
-      role: null
+      role: '',
     };
   },
   methods: {
@@ -94,6 +95,7 @@ export default {
   },
   created() {
     this.getName();
+    console.log('this.role :', this.role);
   }
 };
 </script>

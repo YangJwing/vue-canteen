@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-30 00:39:55
+ * @LastEditTime: 2020-04-05 22:33:53
  * @描述: 
  */
 
@@ -18,10 +18,12 @@ const Register = () => import('views/Register')
 const Login = () => import('views/Login')
 const TestMint = () => import('views/TestMint')
 const About = () => import('views/about/About')
-const MyOrders = () => import('views/about/myorders')
-const OrderCount = () => import('views/about/ordercount')
-const Suggest = () => import('views/about/suggest')
-const Setup = () => import('views/about/setup')
+const MyOrders = () => import('views/about/MyOrders')
+const OrderCount = () => import('views/about/OrderCount')
+const Suggest = () => import('views/about/Suggest')
+const Setup = () => import('views/about/Setup')
+const Help = () => import('views/about/help')
+const AboutMe = () => import('views/about/aboutme')
 
 const routes=[
      {
@@ -36,6 +38,13 @@ const routes=[
         }
     },
     {
+        path:"/about",
+        component:About,
+        meta:{
+            requireAuth:true     // 添加该字段，表示进入这个路由是需要登录的
+        }
+    },
+    {
         path:'/login',
         component:Login
     },
@@ -44,15 +53,11 @@ const routes=[
         component:Register
     },
     {
-        path:"/About",
-        component:About
-    },
-    {
         path:"/myorders",
         component:MyOrders
     },
     {
-        path:"/OrderCount",
+        path:"/ordercount",
         component:OrderCount
     },
     {
@@ -60,14 +65,23 @@ const routes=[
         component:Suggest
     },
     {
+        path:"/help",
+        component:Help
+    },
+    {
         path:"/setup",
         component:Setup
+    },
+    {
+        path:"/aboutme",
+        component:AboutMe
     },
 ]
 
 const router=new VueRouter({
     routes,
-    mode:"history"
+    // mode:"history",
+    base:"/canteen"  //为何加这句，参看：https://blog.csdn.net/lmy0111ly/article/details/83055627
 })
 
 //注册全局钩子用来拦截导航
