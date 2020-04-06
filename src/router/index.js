@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-05 22:33:53
+ * @LastEditTime: 2020-04-06 14:13:59
  * @描述: 
  */
 
@@ -34,14 +34,16 @@ const routes=[
         path:'/home',
         component:Home,
         meta:{
-            requireAuth:true     // 添加该字段，表示进入这个路由是需要登录的
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:true
         }
     },
     {
         path:"/about",
         component:About,
         meta:{
-            requireAuth:true     // 添加该字段，表示进入这个路由是需要登录的
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:true
         }
     },
     {
@@ -54,7 +56,11 @@ const routes=[
     },
     {
         path:"/myorders",
-        component:MyOrders
+        component:MyOrders,
+        meta:{
+            requireAuth:false,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:false
+        }
     },
     {
         path:"/ordercount",
@@ -91,6 +97,7 @@ router.beforeEach((to,from,next)=>{
     if (to.meta.requireAuth){  // 判断该路由是否需要登录权限
         // if (token) {           // 通过vuex state获取当前的token是否存在
         if (user) {           // 通过vuex state获取当前的user是否存在
+            store.commit("SET_ISSHOWBAR",to.meta.isShowBar)
             next()
         } else {
             console.log('该页面需要登录!');
@@ -100,7 +107,13 @@ router.beforeEach((to,from,next)=>{
                 // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
             })
         }
-    } else {    //不用登录权限的页面直接显示
+    } else {
+        // if (to.meta.isShowBar){
+            store.commit("SET_ISSHOWBAR",to.meta.isShowBar)
+            console.log('store.state.isShowBar :', store.state.isShowBar);
+            console.log('store.state.isShowBar :', store.state.isShowBar);
+        // }
+        //不用登录权限的页面直接显示
         next()
     }
 })

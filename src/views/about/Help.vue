@@ -2,15 +2,15 @@
  * @作者: Edwin Yeung
  * @Date: 2020-04-05 21:54:24
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 00:51:06
+ * @LastEditTime: 2020-04-06 11:36:19
  * @描述: 
  -->
 <template>
   <div class="help">
     <van-nav-bar title="帮助" left-arrow left-text="返回" @click-left="onClickLeft" />
-    <div class="title">
-      企石电信食堂订餐小程序使用帮助
-    </div>
+    <!-- <div class="title">
+      使用帮助
+    </div> -->
     <div class="content">
       <van-tag type="success">订餐登记</van-tag>
       <p>选中对应的餐段，选中后购物车就会显示所订的餐和订餐数量，订好餐后进行提交即可。订餐须知请参看订餐页面的说明。</p>

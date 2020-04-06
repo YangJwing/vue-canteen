@@ -190,6 +190,21 @@ router.get('/orderdetails_d', (req, res) => {
     }
   })
 })
+// 显示公告
+router.get('/shownotice', (req, res) => {
+  var sql = $sql.notice.shownotice   
+  var params = req.query
+  console.log('sql :', sql);
+  console.log("荣params:", params);
+  conn.query(sql, [params.content], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      res.send(result)
+    }
+  })
+})
 
 //登记建议数据入库
 router.post('/addsuggestion', (req, res) => {

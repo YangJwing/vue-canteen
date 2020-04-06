@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-26 13:13:50
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-26 17:43:41
+ * @LastEditTime: 2020-04-06 12:00:50
  * @描述: 
  -->
 <template>
@@ -49,7 +49,7 @@
       />
       <div class="suggest-title"></div>
       <div style="margin: 16px;">
-        <van-button round block type="info" :disabled="!(result && description)" native-type="submit">提交</van-button>
+        <van-button round block type="info" :disabled="!(result && description.length>=10)" native-type="submit">提交</van-button>
       </div>
     </van-form>
   </div>
@@ -88,7 +88,7 @@ export default {
         this.$http
         .post('/api/user/addsuggestion',postdata,{})
         .then(reponse=>{
-           this.$notify({type:"success",message:"提交成功，多谢你的建议！"});
+           this.$notify({type:"success",message:"提交成功，多谢您的建议！"});
           //跳转到上一页
           this.$router.go(-1);
 

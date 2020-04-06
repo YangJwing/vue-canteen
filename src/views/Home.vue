@@ -2,17 +2,20 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-05 22:23:26
+ * @LastEditTime: 2020-04-06 14:20:44
  * @描述: 
  -->
 <template>
   <div class="home">
+    <!-- 占位符 44px -->
+     <div style="height:44px;"></div>  
     <!-- <h3>这是首页</h3> -->
     <van-nav-bar class="home-nav" title="企石电信食堂订餐小程序" fixed :right-text="this.$store.state.user1" />
     <div class="container">
       <!-- 人员信息 -->
       <div class="userinfo-group">
-        <van-icon name="user-o" size="20px" />
+        <van-icon v-show="sex" name="user-o" color='#398dee' size="20px" />
+        <van-icon v-show="!sex" name="user-o" color='rgb(255, 85, 218)' size="20px" />
         <div>{{getName}}</div>
       </div>
 
@@ -303,6 +306,7 @@ export default {
   created() {
     this.checkCanDine();
     this.currentTime();
+    this.sex=this.$store.state.sex=='男'?1:0
     // this.test()
   }
 };

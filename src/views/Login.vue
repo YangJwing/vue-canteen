@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-17 21:49:53
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-25 20:00:35
+ * @LastEditTime: 2020-04-06 10:27:42
  * @描述: 
  -->
 
@@ -78,8 +78,10 @@ export default {
 
             //获得用户名和ID
             this.$store.commit("GET_USERID", response.body[0].id);
-            this.$store.commit("GET_USER", response.body[0].name);
-            this.$store.commit("GET_ROLE", response.body[0].role);
+            this.$store.commit("GET_USER",   response.body[0].name);
+            this.$store.commit("GET_ROLE",   response.body[0].role);
+            this.$store.commit("GET_SEX",    response.body[0].sex);
+            this.$store.commit("GET_MOBILE", response.body[0].mobile);
 
             // console.log('user :', this.$store.state.user);
 

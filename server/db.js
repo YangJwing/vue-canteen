@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 14:00:54
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-31 23:48:54
+ * @LastEditTime: 2020-04-06 15:00:17
  * @描述: 
  */
 //参考出处  https://blog.csdn.net/weixin_42003850/article/details/100511566   on 2020/02/18
@@ -20,7 +20,8 @@ module.exports={
         host:'kxfinance.dsmynas.com',     //NAS mysql连接IP地址
         user:'kxuser',
         password:'kx86330088',      //mysql用户名密码
-        database:'db_abc',     //mysql数据库名
+        // database:'db_abc',     //数据库名(开发)
+        database:'canteen',       //数据库名(生产)
         port:'13306'             //mysql连接端口
     }
 }

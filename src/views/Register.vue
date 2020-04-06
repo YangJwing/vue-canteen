@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <h3 style="margin:30px 0 20px;">注册新用户</h3>
+    <h3 class="title">注册新用户</h3>
     <van-form validate-first @failed="onFailed" @submit="onSubmit">
       <!-- 手机通过 validator 进异步行函数校验 -->
       <van-field
@@ -110,8 +110,10 @@ export default {
           this.$store.commit("SET_TOKEN", values);
           console.log("this.state.token:", this.$store.state.token);
 
-          //获得用户名
+          //获得用户信息
           this.$store.commit("GET_USER", values.name);
+          this.$store.commit("GET_MOBILE", values.mobile);
+          this.$store.commit("GET_SEX", values.sex);
           // console.log('user :', this.$store.state.user);
 
           values.state = "首次注册登录";
@@ -122,6 +124,8 @@ export default {
           this.user = {};
           this.$toast("用户增加成功!");
           this.$notify({type:"success",message:"用户注册成功！"});
+          //跳转前赋值
+
           //跳转到主页
           this.$router.push("/home");
         });
@@ -134,8 +138,10 @@ export default {
 </script>
 
 <style>
-h{
-color:rgb(255, 85, 218);
+.title{
+margin:50px auto 20px auto;
+width:320px;
+text-align:center;
 }
 
 </style>

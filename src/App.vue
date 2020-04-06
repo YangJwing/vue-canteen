@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-05 22:04:39
+ * @LastEditTime: 2020-04-06 14:50:10
  * @描述: 
  -->
 <template>
@@ -19,18 +19,18 @@
     </div> -->
 
     <!-- NavBar -->
-    <van-nav-bar class="home-nav" :title="nav_title" fixed :right-text="this.$store.state.user1" />
+    <van-nav-bar class="home-nav" v-show="isShowBar" :title="nav_title" fixed :right-text="this.$store.state.user1" />
     <!-- TabBar -->
-    <van-tabbar v-model="active" fiexed  @change="onChange">
+    <van-tabbar v-show="isShowBar"  v-model="active" fiexed  @change="onChange">
       <!-- <van-tabbar-item to="/home" info="3" icon="home-o">主页</van-tabbar-item> -->
       <van-tabbar-item to="/home"  icon="shopping-cart-o">订餐</van-tabbar-item>
       <van-tabbar-item to="/about" icon="user-o" >我的</van-tabbar-item>
     </van-tabbar>
 
 
-    <div style="height:44px;"></div>
+    <!-- <div style="height:44px;"></div> -->
     <router-view></router-view>
-    <div style="height:49px;"></div>
+    <!-- <div style="height:49px;"></div> -->
 
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
       islogin:false,
       active:0,
       nav_title:"企石电信食堂订餐小程序",
+      isShowBar:true,
     };
   },
   methods: {
@@ -71,11 +72,13 @@ export default {
   },
   updated(){
     this.getlogin()
+    this.isShowBar=this.$store.state.isShowBar
+    console.log('主页 this.isShowBar :', this.$store.state.isShowBar);
   }
 };
 </script>
 
-<style scope>
+<style>
 /* navbar 的颜色和底色 */
   .home-nav{
     background-color: #398dee;

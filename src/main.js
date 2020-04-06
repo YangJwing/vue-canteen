@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-24 23:25:39
+ * @LastEditTime: 2020-04-06 14:03:00
  * @描述: 
  */
 // The Vue build version to load with the `import` command
@@ -36,7 +36,7 @@ new Vue({
   components:{App},
   // template:'<App/>',
   render:h=>h(App),
+  store,
   router,
-  store
 })
 

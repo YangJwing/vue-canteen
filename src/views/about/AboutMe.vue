@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-04-05 21:54:24
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 00:05:03
+ * @LastEditTime: 2020-04-06 11:37:47
  * @描述: 
  -->
 <template>
@@ -46,7 +46,7 @@ div.about-me {
 .title {
   margin: 30px auto 10px auto;
   /* margin:0 auto ; */
-  width: 300px;
+  width: 320px;
   text-align: center;
   font-size: 18px;
 }
