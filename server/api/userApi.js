@@ -6,10 +6,36 @@ var express = require('express')
 var router = express.Router()
 var mysql = require('mysql')
 var $sql = require('../sqlMap')
+var conn
+
+// // 连接数据库
+// var conn = mysql.createConnection(models.mysql)
+// conn.connect()
+
+// 在Node.js使用mysql模块时遇到的坑
+// https://cnodejs.org/topic/516b77e86d382773064266df
+function handleError(err) {
+  if (err) {
+    // 如果是连接断开，自动重新连接
+    if (err.code == 'PROTOCOL_CONNECTION_LOST') {
+      connect()
+    } else {
+      console.error(err.stack || err)
+    }
+  }
+}
 
 // 连接数据库
-var conn = mysql.createConnection(models.mysql)
-conn.connect()
+function connect () {
+  conn = mysql.createConnection(models.mysql)
+  // db = mysql.createConnection(config);
+  conn.connect(handleError);
+  conn.on('error', handleError);
+}
+
+connect()
+
+
 var jsonWrite = function (res, ret) {
   if (typeof ret === 'undefined') {
     res.json({

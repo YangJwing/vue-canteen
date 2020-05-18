@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 12:01:36
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 15:32:15
+ * @LastEditTime: 2020-04-06 15:40:27
  * @描述: 
  -->
 <template>
@@ -22,7 +22,7 @@
         cover
         width="4.5rem"
         height="4.5rem"
-        :src="require('@/assets/img/nanzhi.png')"
+        :src="require('@/assets/img/nanzhi.svg')"
       />
       <van-image
         class="avatar-item"
@@ -31,7 +31,7 @@
         cover
         width="4.5rem"
         height="4.5rem"
-        :src="require('@/assets/img/nvzhi.png')"
+        :src="require('@/assets/img/nvzhi.svg')"
       />
       <!-- 用户信息 -->
       <div class="avatar-item">

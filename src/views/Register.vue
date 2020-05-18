@@ -126,8 +126,12 @@ export default {
           this.$notify({type:"success",message:"用户注册成功！"});
           //跳转前赋值
 
-          //跳转到主页
-          this.$router.push("/home");
+          // //跳转到主页
+          // this.$router.push("/home");
+
+          //跳转到登录
+          this.$router.push("/login");
+          this.$toast('注册后请重新登录！')
         });
      },
     onFailed(errorInfo) {
