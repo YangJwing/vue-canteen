@@ -8,16 +8,19 @@ var mysql = require('mysql')
 var $sql = require('../sqlMap')
 var conn
 
+var bcrypt = require('bcrypt')
+
 // // 连接数据库
 // var conn = mysql.createConnection(models.mysql)
 // conn.connect()
 
 // 在Node.js使用mysql模块时遇到的坑
 // https://cnodejs.org/topic/516b77e86d382773064266df
+
 function handleError(err) {
   if (err) {
     // 如果是连接断开，自动重新连接
-    if (err.code == 'PROTOCOL_CONNECTION_LOST') {
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       connect()
     } else {
       console.error(err.stack || err)
@@ -26,7 +29,7 @@ function handleError(err) {
 }
 
 // 连接数据库
-function connect () {
+function connect() {
   conn = mysql.createConnection(models.mysql)
   // db = mysql.createConnection(config);
   conn.connect(handleError);
@@ -47,14 +50,16 @@ var jsonWrite = function (res, ret) {
   }
 }
 
+
 // 增加用户接口
 router.post('/register', (req, res) => {
   var sql = $sql.user.register;
   // post、put、delete通过req.body , get通过req.query 获取参数
   var params = req.body;
-  console.log("params:", params);
+  var hash = bcrypt.hashSync(req.body.password, 10)
+
   // function(err,result) 相当于 (err,result)=>
-  conn.query(sql, [params.name, params.sex, params.mobile, params.password], (err, result) => {
+  conn.query(sql, [params.name, params.sex, params.mobile, hash], (err, result) => {
     if (err) {
       console.log("荣提示：" + err);
     }
@@ -72,14 +77,32 @@ router.post('/logincheck', (req, res) => {
   console.log('sql :', sql);
   console.log('params :', params);
   conn.query(sql, [params.mobile, params.password], (err, result) => {
-    if (err) {
-      console.log("提示：" + err);
-    }
-    if (result.length) {
-      // res.json({status:1,msg:"登录成功"})
+    // if (err) {
+    //   console.log("提示：" + err);
+    // }
+    // if (result.length) {
+    //   // res.json({status:1,msg:"登录成功"})
+    //   jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
+    // } else {
+    //   res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })  //用户名或密码错误,返回信息
+    // }
+    console.log('result :>> ', result);
+    
+    var string = JSON.stringify(result)
+    var data = JSON.parse(string)
+
+    var encrypted = String(data[0].password)
+    console.log('encrypted :>> ', encrypted);
+
+    const isPasswordValid = bcrypt.compareSync(
+      params.password, encrypted
+    )
+
+    if (isPasswordValid) {
       jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
     } else {
-      res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })  //用户名或密码错误,返回信息
+      // res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })
+      res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })
     }
   })
 })
@@ -128,7 +151,7 @@ router.post('/adddine', (req, res) => {
   var params = req.body
   console.log('sql :', sql);
   console.log('params :', params);
-  conn.query(sql, [params.userid, params.name, params.orderdate, params.breakfast,params.lunch, params.dinner], (err, result) => {
+  conn.query(sql, [params.userid, params.name, params.orderdate, params.breakfast, params.lunch, params.dinner], (err, result) => {
     if (err) {
       console.log("提示：" + err);
     }
@@ -158,7 +181,7 @@ router.get('/myorders', (req, res) => {
 
 // 查询订餐分类合计
 router.get('/ordercount', (req, res) => {
-  var sql = $sql.orders.ordercount   
+  var sql = $sql.orders.ordercount
   var params = req.query
   // console.log('sql :', sql);
   // console.log("荣params:", params);
@@ -173,7 +196,7 @@ router.get('/ordercount', (req, res) => {
 })
 // 查询订餐分类~姓名 breakfast
 router.get('/orderdetails_b', (req, res) => {
-  var sql = $sql.orders.orderdetails_b   
+  var sql = $sql.orders.orderdetails_b
   var params = req.query
   console.log('sql :', sql);
   console.log("荣params:", params);
@@ -188,7 +211,7 @@ router.get('/orderdetails_b', (req, res) => {
 })
 // 查询订餐分类~姓名 lunch
 router.get('/orderdetails_l', (req, res) => {
-  var sql = $sql.orders.orderdetails_l   
+  var sql = $sql.orders.orderdetails_l
   var params = req.query
   console.log('sql :', sql);
   console.log("荣params:", params);
@@ -203,7 +226,7 @@ router.get('/orderdetails_l', (req, res) => {
 })
 // 查询订餐分类~姓名 dinner
 router.get('/orderdetails_d', (req, res) => {
-  var sql = $sql.orders.orderdetails_d   
+  var sql = $sql.orders.orderdetails_d
   var params = req.query
   console.log('sql :', sql);
   console.log("荣params:", params);
@@ -218,7 +241,7 @@ router.get('/orderdetails_d', (req, res) => {
 })
 // 显示公告
 router.get('/shownotice', (req, res) => {
-  var sql = $sql.notice.shownotice   
+  var sql = $sql.notice.shownotice
   var params = req.query
   console.log('sql :', sql);
   console.log("荣params:", params);

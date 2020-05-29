@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 14:32:54
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 13:19:39
+ * @LastEditTime: 2020-05-24 13:42:48
  * @描述: 
  */
 //参考出处  https://blog.csdn.net/weixin_42003850/article/details/100511566   on 2020/02/18
@@ -17,7 +17,8 @@ var sqlMap = {
 
   // 用户表
   user: {
-    logincheck: 'select * from user where mobile = ? and password = ?',  //密码校验
+    // logincheck: 'select * from user where mobile = ? and password = ?',  //密码校验
+    logincheck: 'select * from user where mobile = ? ',  //密码校验
     register: 'insert into user(name,sex,mobile,password) values( ?,?,?,? )',
     checkmobile: 'select * from user where mobile = ?',        //检查手机号已存在数据中
     edit: 'update user set name = ? , sex = ? where name=?',  //更新用户数据

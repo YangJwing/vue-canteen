@@ -1,0 +1,14 @@
+@url = http://192.168.0.2:3000/api/user
+@json = Content-Type: application/json
+
+### Get
+get {{url}}/user
+
+### 注册
+post {{url}}/register1
+{{json}}
+
+{
+  "mobile":"13712796608"  ,
+  "password":"123456"
+}

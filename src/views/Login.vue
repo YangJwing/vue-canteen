@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-17 21:49:53
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 10:27:42
+ * @LastEditTime: 2020-05-30 00:02:54
  * @描述: 
  -->
 
@@ -74,6 +74,7 @@ export default {
 
             //设置TOKEN 和 localstorage
             this.$store.commit("SET_TOKEN", response.body[0]);
+            console.log('response.body[0] :>> ', response.body[0]);
             console.log("this.state.token:", this.$store.state.token);
 
             //获得用户名和ID
