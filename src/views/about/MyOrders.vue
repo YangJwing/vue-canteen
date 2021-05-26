@@ -49,7 +49,7 @@ export default {
       let userid = this.$store.state.userid;
       console.log("userid :", userid);
       this.$http
-        .get("/api/user/myorders", { params: { userid: userid } })
+        .get("/api/user/myorders",{ params: { userid: userid } })
         .then(response => {
           let o = response.body;
           // for (let i = 0; i < o.length; i++) {

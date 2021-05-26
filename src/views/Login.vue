@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-17 21:49:53
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-05-30 00:02:54
+ * @LastEditTime: 2021-05-14 22:29:19
  * @描述: 
  -->
 
@@ -67,27 +67,25 @@ export default {
       this.$http
         .post("/api/user/logincheck", values, {})
         .then(response => {
-          //判断用户名和密码是否正确,用后台返回的msg作为判断
-          if (!response.body.msg) {
+          //判断用户名和密码是否正确,用后台返回的message作为判断
+          console.log('response :>> ', response);
+          if (!response.body.message) {
             //state的islogin设为true
             this.$store.commit("SET_LOGIN", true);
 
             //设置TOKEN 和 localstorage
-            this.$store.commit("SET_TOKEN", response.body[0]);
-            console.log('response.body[0] :>> ', response.body[0]);
-            console.log("this.state.token:", this.$store.state.token);
-
+            this.$store.commit("SET_TOKEN", response.body.token);
             //获得用户名和ID
-            this.$store.commit("GET_USERID", response.body[0].id);
-            this.$store.commit("GET_USER",   response.body[0].name);
-            this.$store.commit("GET_ROLE",   response.body[0].role);
-            this.$store.commit("GET_SEX",    response.body[0].sex);
-            this.$store.commit("GET_MOBILE", response.body[0].mobile);
+            this.$store.commit("GET_USERID", response.body.user.id);
+            this.$store.commit("GET_USER",   response.body.user.name);
+            this.$store.commit("GET_ROLE",   response.body.user.role);
+            this.$store.commit("GET_SEX",    response.body.user.sex);
+            this.$store.commit("GET_MOBILE", response.body.user.mobile);
 
             // console.log('user :', this.$store.state.user);
 
-            loginData.name = response.body[0].name;
-            loginData.mobile = response.body[0].mobile;
+            loginData.name = response.body.user.name;
+            loginData.mobile = response.body.user.mobile;
             loginData.state = "成功";
 
             //记录登录日志
@@ -104,7 +102,7 @@ export default {
             loginData.mobile = this.mobile;
             loginData.state = "失败";
             // console.log("response.body :", response.body);
-            this.$toast(response.body.msg);
+            this.$toast(response.body.message);
             // console.log("this.state.token:", this.$store.state.token);
           }
         })

@@ -9,6 +9,10 @@ var $sql = require('../sqlMap')
 var conn
 
 var bcrypt = require('bcrypt')
+var jwt = require('jsonwebtoken')
+
+const SECRET = 'jwing_13712796608'
+
 
 // // 连接数据库
 // var conn = mysql.createConnection(models.mysql)
@@ -43,13 +47,19 @@ var jsonWrite = function (res, ret) {
   if (typeof ret === 'undefined') {
     res.json({
       code: '1',
-      msg: '操作失败'
+      message: '操作失败'
     })
   } else {
     res.json(ret)
   }
 }
 
+const auth = async (req, res, next) => {
+  var raw = req.headers
+
+  console.log('raw :>> ', raw);
+  next()
+}
 
 // 增加用户接口
 router.post('/register', (req, res) => {
@@ -77,17 +87,9 @@ router.post('/logincheck', (req, res) => {
   console.log('sql :', sql);
   console.log('params :', params);
   conn.query(sql, [params.mobile, params.password], (err, result) => {
-    // if (err) {
-    //   console.log("提示：" + err);
-    // }
-    // if (result.length) {
-    //   // res.json({status:1,msg:"登录成功"})
-    //   jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
-    // } else {
-    //   res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })  //用户名或密码错误,返回信息
-    // }
+
     console.log('result :>> ', result);
-    
+
     var string = JSON.stringify(result)
     var data = JSON.parse(string)
 
@@ -98,12 +100,34 @@ router.post('/logincheck', (req, res) => {
       params.password, encrypted
     )
 
-    if (isPasswordValid) {
-      jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
-    } else {
-      // res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })
-      res.json({ status: 1, name: '未知用户名', msg: "用户名或密码错误" })
+    if (!isPasswordValid) {
+      //   jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
+      // } else {
+      return res.json({ status: 1, name: '未知用户名', message: "用户名或密码错误" })
     }
+    // 取得用户信息
+    // const user = {
+    //   id: data[0].id,
+    //   name: data[0].name,
+    //   sex: data[0].sex,
+    //   mobile: data[0].mobile,
+    //   password: data[0].password,
+    //   role: data[0].role,
+    // }
+    const user = data[0]
+    // 生成token
+    const token = jwt.sign({
+      id: String(user.mobile),
+    }, SECRET)
+
+    console.log('token :>> ', token);
+    console.log('user :>> ', user);
+
+    res.send({
+      user,
+      token
+    })
+
   })
 })
 
@@ -120,7 +144,7 @@ router.post('/loginlog', (req, res) => {
     if (result.length) {
       jsonWrite(res, result);  //
     } else {
-      res.json({ status: 1, msg: "写入失败" })  //
+      res.json({ status: 1, message: "写入失败" })  //
     }
   })
 })
@@ -158,13 +182,13 @@ router.post('/adddine', (req, res) => {
     if (result.length) {
       jsonWrite(res, result);  //
     } else {
-      res.json({ status: 1, msg: "写入失败" })  //
+      res.json({ status: 1, message: "写入失败" })  //
     }
   })
 })
 
 // 查询用户订餐记录
-router.get('/myorders', (req, res) => {
+router.get('/myorders', auth, async (req, res) => {
   var sql = $sql.orders.myorders   //sql 相当于 sqlMaps.js下的 user(对象):search（属性） 语句： select * from user where name=?
   var params = req.query
   console.log('sql :', sql);
@@ -268,7 +292,7 @@ router.post('/addsuggestion', (req, res) => {
     if (result.length) {
       jsonWrite(res, result);  //
     } else {
-      res.json({ status: 1, msg: "写入失败" })  //
+      res.json({ status: 1, message: "写入失败" })  //
     }
   })
 })

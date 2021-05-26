@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 14:03:00
+ * @LastEditTime: 2020-10-08 21:44:06
  * @描述: 
  */
 // The Vue build version to load with the `import` command
@@ -19,7 +19,7 @@ import VueResource from 'vue-resource'
 // // import './assets/css/my-mint.scss'   //全局修改mint-UI样式
 
 //引入vant
-import Vant from 'vant'
+import Vant, { Col } from 'vant'
 import 'vant/lib/index.css'
 
 //引入日期时间格式化组件
@@ -30,6 +30,9 @@ Vue.use(VueResource)
 Vue.use(Vant)
 
 Vue.config.productionTip = false
+
+Vue.http.headers.common['token'] = store.state.token
+console.log('main 里面的 store.state.token :>> ', store.state.token);
 
 new Vue({
   el:'#app',

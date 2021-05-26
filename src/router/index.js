@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 14:13:59
+ * @LastEditTime: 2020-11-26 13:15:06
  * @描述: 
  */
 
@@ -16,7 +16,7 @@
 const Home = () => import('views/Home')
 const Register = () => import('views/Register')
 const Login = () => import('views/Login')
-const TestMint = () => import('views/TestMint')
+// const TestMint = () => import('views/TestMint')
 const About = () => import('views/about/About')
 const MyOrders = () => import('views/about/MyOrders')
 const OrderCount = () => import('views/about/OrderCount')
@@ -58,17 +58,24 @@ const routes=[
         path:"/myorders",
         component:MyOrders,
         meta:{
-            requireAuth:false,     // 添加该字段，表示进入这个路由是需要登录的
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
             isShowBar:false
         }
     },
     {
         path:"/ordercount",
-        component:OrderCount
+        component:OrderCount,
+        meta:{
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:false
+        }
     },
     {
         path:"/suggest",
-        component:Suggest
+        component:Suggest,meta:{
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:false
+        }
     },
     {
         path:"/help",
@@ -76,11 +83,19 @@ const routes=[
     },
     {
         path:"/setup",
-        component:Setup
+        component:Setup,
+        meta:{
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:false
+        }
     },
     {
         path:"/aboutme",
-        component:AboutMe
+        component:AboutMe,
+        meta:{
+            requireAuth:true,     // 添加该字段，表示进入这个路由是需要登录的
+            isShowBar:false
+        }
     },
 ]
 
@@ -110,7 +125,6 @@ router.beforeEach((to,from,next)=>{
     } else {
         // if (to.meta.isShowBar){
             store.commit("SET_ISSHOWBAR",to.meta.isShowBar)
-            console.log('store.state.isShowBar :', store.state.isShowBar);
             console.log('store.state.isShowBar :', store.state.isShowBar);
         // }
         //不用登录权限的页面直接显示

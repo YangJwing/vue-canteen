@@ -1,8 +1,8 @@
-@url = http://192.168.0.2:3000/api/user
+@url = http://192.168.0.11:3000/api/user
 @json = Content-Type: application/json
 
 ### Get
-get {{url}}/user
+get {{url}}
 
 ### 注册
 post {{url}}/register1

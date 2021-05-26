@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-15 13:59:31
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-04-06 14:20:44
+ * @LastEditTime: 2020-05-30 15:19:01
  * @描述: 
  -->
 <template>
@@ -236,13 +236,11 @@ export default {
         // console.log("--------重置为TRUE ------");
       } 
 
-      console.log(
-        "当前日期： %s , 登记日期： %s",
-        new Date().getDate(),
-        this.dineDate.getDate()
-      );
-      // console.log('nowTime: %s , b_time: %s, l_time: %s, d_time : %s',new Date().getHours(),breakfast_time.getHours(),lunch_time.getHours(),dinner_time.getHours());
-      // console.log('can.breakfast: %s ,can.lunch: %s , can.dinner: %s', this.canDine.breakfast,this.canDine.lunch,this.canDine.dinner);
+      // console.log(
+      //   "当前日期： %s , 登记日期： %s",
+      //   new Date().getDate(),
+      //   this.dineDate.getDate()
+      // );
     },
     //创建定时器
     currentTime() {
